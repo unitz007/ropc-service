@@ -24,7 +24,7 @@ var GlobalConfig Config
 func LoadConfig() Config {
 
 	// load .env file
-	err := godotenv.Load(".env")
+	err := godotenv.Load(".env2")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
