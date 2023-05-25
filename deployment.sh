@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# sets gin to release mode
+export GIN_MODE=release
+
+# run tests
+if go test ./...; then
+  echo "test passed"
+else
+  echo "Test failed. Exiting..."
+  exit 0
+fi
+
+# build go project to executable
+GOOS="linux" GOARCH="amd64" go build .
+
+# build container image
+docker build -t ropc-service .
+
+# tag image
+docker tag ropc-service unitz007/ropc-service
+
+# push to registry
+docker push unitz007/ropc-service:latest
+
+# deploy image
+docker-compose up --remove-orphans -d
