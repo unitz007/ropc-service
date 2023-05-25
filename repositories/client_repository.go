@@ -22,7 +22,7 @@ func (c ClientRepositoryImpl) GetClient(clientId string) (*model.Client, error) 
 
 	var client model.Client
 
-	err := c.db.Debug().Model(&model.Client{}).Where("client_id = ?", clientId).First(&client).Error
+	err := c.db.Model(&model.Client{}).Where("client_id = ?", clientId).First(&client).Error
 	if err != nil {
 		return nil, errors.New("invalid client")
 	}
