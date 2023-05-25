@@ -63,7 +63,3 @@ func PreLoadData() {
 	DB.Create(&user)
 
 }
-
-func autoMigrate(vals ...any) {
-
-}
