@@ -9,7 +9,6 @@ import (
 
 type UserRepository interface {
 	GetUser(username string) (*model.User, error)
-	//GetUserAndClient(user *model.User) (*model.User, error)
 }
 
 type UserRepositoryImpl struct {

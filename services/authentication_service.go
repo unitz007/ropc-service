@@ -13,10 +13,10 @@ type AuthenticationServiceImpl struct {
 	clientAuthenticator ClientAuthenticatorContract
 }
 
-func InstantiateAuthenticator(userAuthenticator UserAuthenticatorContract, clientAuthenticator ClientAuthenticatorContract) *AuthenticationServiceImpl {
+func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticatorContract) *AuthenticationServiceImpl {
 	return &AuthenticationServiceImpl{
-		userAuthenticator:   userAuthenticator,
-		clientAuthenticator: clientAuthenticator,
+		userAuthenticator:   uA,
+		clientAuthenticator: cA,
 	}
 }
 
