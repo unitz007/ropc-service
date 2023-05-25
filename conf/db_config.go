@@ -11,14 +11,12 @@ import (
 
 var DB *gorm.DB
 
-func InitGormConfig() {
+func InitGormConfig(globalConfig *Config) {
 
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
-	globalConfig := GlobalConfig
 
 	DbHost := globalConfig.DatabaseHost
 	DbUser := globalConfig.DatabaseUser

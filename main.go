@@ -11,7 +11,7 @@ import (
 func main() {
 
 	globalConfig := conf.LoadConfig()
-	conf.InitGormConfig()
+	conf.InitGormConfig(&globalConfig)
 
 	gin.SetMode(globalConfig.GinMode)
 
