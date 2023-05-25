@@ -17,11 +17,5 @@ GOOS="linux" GOARCH="amd64" go build .
 # build container image
 docker build -t ropc-service .
 
-# tag image
-docker tag ropc-service unitz007/ropc-service
-
-# push to registry
-docker push unitz007/ropc-service:latest
-
 # deploy image
 docker-compose up --remove-orphans -d
