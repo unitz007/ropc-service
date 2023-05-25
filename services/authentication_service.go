@@ -13,8 +13,6 @@ type AuthenticationServiceImpl struct {
 	clientAuthenticator ClientAuthenticatorContract
 }
 
-var tokenUtil = InstantiateTokenUtil()
-
 func InstantiateAuthenticator(userAuthenticator UserAuthenticatorContract, clientAuthenticator ClientAuthenticatorContract) *AuthenticationServiceImpl {
 	return &AuthenticationServiceImpl{
 		userAuthenticator:   userAuthenticator,
@@ -24,7 +22,7 @@ func InstantiateAuthenticator(userAuthenticator UserAuthenticatorContract, clien
 
 func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *model.Client) (*model.Token, error) {
 
-	channel := make(chan any)
+	channel := make(chan any, 2)
 
 	go func() {
 		u, err := selfC.userAuthenticator.Authenticate(user.Username, user.Password)
@@ -65,7 +63,7 @@ func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *mo
 		}
 	}
 
-	accessToken, err := tokenUtil.GenerateToken(u2, c2)
+	accessToken, err := GenerateToken(u2, c2)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package repositories
 import (
 	"errors"
 	"gorm.io/gorm"
+	"ropc-service/conf"
 	"ropc-service/model"
 )
 
@@ -17,7 +18,7 @@ type UserRepositoryImpl struct {
 
 func NewUserRepository() *UserRepositoryImpl {
 	return &UserRepositoryImpl{
-		db: DatabaseConfig.db,
+		db: conf.DB,
 	}
 }
 

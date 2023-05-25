@@ -3,6 +3,7 @@ package repositories
 import (
 	"errors"
 	"gorm.io/gorm"
+	"ropc-service/conf"
 	"ropc-service/model"
 )
 
@@ -15,7 +16,7 @@ type ClientRepositoryImpl struct {
 }
 
 func NewClientRepository() *ClientRepositoryImpl {
-	return &ClientRepositoryImpl{db: DatabaseConfig.db}
+	return &ClientRepositoryImpl{db: conf.DB}
 }
 
 func (c ClientRepositoryImpl) GetClient(clientId string) (*model.Client, error) {

@@ -3,31 +3,24 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"log"
-	"os"
+	"ropc-service/conf"
 	"ropc-service/handlers"
-	"ropc-service/repositories"
 )
 
 func main() {
 
-	// load .env file
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	globalConfig := conf.LoadConfig()
+	conf.InitGormConfig()
 
-	gin.SetMode(os.Getenv("GIN_MODE"))
+	gin.SetMode(globalConfig.GinMode)
 
 	router := gin.Default()
 	router.Use(gin.Recovery())
-	repositories.InitGormConfig()
-	repositories.DatabaseConfig.PreLoadData()
 
 	router.POST("/login", handlers.Authentication)
 
-	err = router.Run(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")))
+	err := router.Run(fmt.Sprintf(":%s", globalConfig.ServerPort))
 	if err != nil {
 		log.Fatal(err)
 	}
