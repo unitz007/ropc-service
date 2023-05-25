@@ -3,6 +3,7 @@ package repositories
 import (
 	"errors"
 	"gorm.io/gorm"
+	"ropc-service/conf"
 	"ropc-service/model"
 )
 
@@ -15,14 +16,14 @@ type ClientRepositoryImpl struct {
 }
 
 func NewClientRepository() *ClientRepositoryImpl {
-	return &ClientRepositoryImpl{db: DatabaseConfig.db}
+	return &ClientRepositoryImpl{db: conf.DB}
 }
 
 func (c ClientRepositoryImpl) GetClient(clientId string) (*model.Client, error) {
 
 	var client model.Client
 
-	err := c.db.Debug().Model(&model.Client{}).Where("client_id = ?", clientId).First(&client).Error
+	err := c.db.Model(&model.Client{}).Where("client_id = ?", clientId).First(&client).Error
 	if err != nil {
 		return nil, errors.New("invalid client")
 	}

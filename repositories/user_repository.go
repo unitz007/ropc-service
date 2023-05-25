@@ -3,6 +3,7 @@ package repositories
 import (
 	"errors"
 	"gorm.io/gorm"
+	"ropc-service/conf"
 	"ropc-service/model"
 )
 
@@ -17,14 +18,14 @@ type UserRepositoryImpl struct {
 
 func NewUserRepository() *UserRepositoryImpl {
 	return &UserRepositoryImpl{
-		db: DatabaseConfig.db,
+		db: conf.DB,
 	}
 }
 
 func (selfC UserRepositoryImpl) GetUser(username string) (*model.User, error) {
 	var user model.User
 
-	err := selfC.db.Debug().Model(&model.User{}).Where("username = ?", username).Preload("Client").First(&user).Error
+	err := selfC.db.Model(&model.User{}).Where("username = ?", username).Preload("Client").First(&user).Error
 	if err != nil {
 		return nil, errors.New("invalid user credentials")
 	}
