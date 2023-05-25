@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"ropc-service/model"
 )
 
@@ -45,22 +44,33 @@ func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *mo
 		channel <- c
 	}()
 
-	var token *model.Token
+	var u2 *model.User
+	var c2 *model.Client
 
 	for val := range channel {
 		if err, ok := val.(error); ok && err != nil {
-			log.Println("Got here")
 			return nil, err
 		} else {
-			s, err := tokenUtil.GenerateToken(&model.User{}, &model.Client{})
-			if err != nil {
-				return nil, err
-			} else {
-				token = &model.Token{AccessToken: s}
-				break
+			if u, ok := val.(*model.User); ok {
+				u2 = u
+			}
+
+			if c, ok := val.(*model.Client); ok {
+				c2 = c
 			}
 		}
+
+		if u2 != nil && c2 != nil {
+			break
+		}
 	}
+
+	accessToken, err := tokenUtil.GenerateToken(u2, c2)
+	if err != nil {
+		return nil, err
+	}
+
+	token := &model.Token{AccessToken: accessToken}
 
 	return token, nil
 }
