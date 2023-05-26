@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=unitz007
       - MYSQL_DATABASE=ropc
   backend_service:
-    image: "ropc-service"
+    image: "unitz007/ropc-service"
     restart: on-failure
     environment:
       - DB_PORT=3308

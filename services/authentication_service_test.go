@@ -37,7 +37,7 @@ func Test_AuthenticationFailure(t *testing.T) {
 	assert.EqualError(t, err, "invalid client credentials")
 }
 
-func resetMocks() (*mocks.UserAuthenticatorContract, *mocks.ClientAuthenticatorContract, *AuthenticationServiceImpl) {
+func resetMocks() (*mocks.UserAuthenticatorContract, *mocks.ClientAuthenticatorContract, *Authenticator) {
 
 	userAuthenticatorMock := new(mocks.UserAuthenticatorContract)
 	clientAuthenticatorMock := new(mocks.ClientAuthenticatorContract)

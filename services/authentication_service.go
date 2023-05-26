@@ -5,23 +5,23 @@ import (
 	"ropc-service/model/entities"
 )
 
-type AuthenticationService interface {
+type AuthenticatorContract interface {
 	Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error)
 }
 
-type AuthenticationServiceImpl struct {
+type Authenticator struct {
 	userAuthenticator   UserAuthenticatorContract
 	clientAuthenticator ClientAuthenticatorContract
 }
 
-func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticatorContract) *AuthenticationServiceImpl {
-	return &AuthenticationServiceImpl{
+func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticatorContract) *Authenticator {
+	return &Authenticator{
 		userAuthenticator:   uA,
 		clientAuthenticator: cA,
 	}
 }
 
-func (selfC AuthenticationServiceImpl) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
+func (selfC Authenticator) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
 
 	channel := make(chan any, 2)
 
