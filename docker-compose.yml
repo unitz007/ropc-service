@@ -1,23 +1,23 @@
 version: "3.8"
 
 services:
-  db-ropc:
+  db:
     image: "mariadb"
     restart: on-failure
     ports:
-      - "3307:3306"
+      - "3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=unitz007
+      - MYSQL_ROOT_PASSWORD=dbPassword
       - MYSQL_DATABASE=ropc
-  backend_service:
-    image: "unitz007/ropc-service"
+  backend:
+    image: "ropc-service"
     restart: on-failure
     environment:
-      - DB_PORT=3308
-      - DB_HOST=db-ropc
+      - DB_PORT=3300
+      - DB_HOST=db
       - DB_DRIVER=mysql
       - DB_USER=root
-      - DB_PASSWORD=unitz007
+      - DB_PASSWORD=dbPassword
       - DB_NAME=ropc
       - DB_PORT=3306
       - GIN_MODE=release
@@ -25,4 +25,4 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db-ropc
+      - db

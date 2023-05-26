@@ -27,4 +27,4 @@ GOOS="linux" GOARCH="amd64" go build .
 docker build -t ropc-service .
 
 # deploy image
-docker-compose up --remove-orphans -d
+docker-compose up -d
