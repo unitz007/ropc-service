@@ -4,14 +4,14 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/stretchr/testify/suite"
 	"gorm.io/gorm"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 )
 
 type Suite struct {
 	suite.Suite
 	DB     *gorm.DB
 	mock   sqlmock.Sqlmock
-	client *model.Client
+	client *entities.Client
 }
 
 //

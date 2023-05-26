@@ -4,11 +4,11 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"ropc-service/conf"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 )
 
 type ClientRepository interface {
-	GetClient(clientId string) (*model.Client, error)
+	GetClient(clientId string) (*entities.Client, error)
 }
 
 type ClientRepositoryImpl struct {
@@ -19,11 +19,11 @@ func NewClientRepository() *ClientRepositoryImpl {
 	return &ClientRepositoryImpl{db: conf.DB}
 }
 
-func (c ClientRepositoryImpl) GetClient(clientId string) (*model.Client, error) {
+func (c ClientRepositoryImpl) GetClient(clientId string) (*entities.Client, error) {
 
-	var client model.Client
+	var client entities.Client
 
-	err := c.db.Model(&model.Client{}).Where("client_id = ?", clientId).First(&client).Error
+	err := c.db.Model(&entities.Client{}).Where("client_id = ?", clientId).First(&client).Error
 	if err != nil {
 		return nil, errors.New("invalid client")
 	}

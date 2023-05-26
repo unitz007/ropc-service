@@ -3,11 +3,11 @@ package services
 import (
 	"github.com/golang-jwt/jwt"
 	"ropc-service/conf"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 	"time"
 )
 
-func GenerateToken(user *model.User, client *model.Client) (string, error) {
+func GenerateToken(user *entities.User, client *entities.Client) (string, error) {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)

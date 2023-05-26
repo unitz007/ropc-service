@@ -10,7 +10,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pod-info
+      app: backend-pod
   template:
     metadata:
       labels:
@@ -22,6 +22,24 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: DB_HOST
+              value: localhost
+            - name: DB_PASSWORD
+              value: unitz007
+            - name: DB_USER
+              value: root
+            - name: DB_NAME
+              value: ropc_db
+            - name: DB_PORT
+              value: "3306"
+            - name: TOKEN_SECRET
+              value: secretToken
+            - name: TOKEN_EXPIRY
+              value: "5"
+            - name: GIN_MODE
+              value: release
+            - name: SERVER_PORT
+              value: "3000"
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -36,15 +54,42 @@ spec:
                   fieldPath: status.podIP
 
 ---
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ropc-service-ingress
+  name: ropc-db
   namespace: development
+  labels:
+    app: ropc-db
 spec:
+  replicas: 2
   selector:
-    app: pod-info
-  ports:
-    - port: 80
-      targetPort: 8080
-  type: LoadBalancer
+    matchLabels:
+      app: db-pod
+  template:
+    metadata:
+      labels:
+        app: pod-info
+    spec:
+      containers:
+        - name: ropc-db-container
+          image: mariadb:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: unitz007
+            - name: DB_NAME
+              value: ropc
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP

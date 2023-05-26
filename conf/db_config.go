@@ -5,7 +5,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 )
 
 var DB *gorm.DB
@@ -25,7 +25,7 @@ func InitGormConfig(globalConfig *Config) {
 	}
 	DB = database
 
-	err = DB.AutoMigrate(&model.User{}, &model.Client{})
+	err = DB.AutoMigrate(&entities.User{}, &entities.Client{})
 	if err != nil {
 		log.Fatal("Could not migrate:", err.Error())
 	}
@@ -38,14 +38,14 @@ func PreLoadData() {
 
 	log.Println("Preloading data")
 
-	client := model.Client{
+	client := entities.Client{
 		ClientId:     "testClient",
 		ClientSecret: "$2a$12$cUC8531lrEhDzRT2aOZr8eUkTRuP0mpyyRZ.nvKRBg9oL145RT8Lu", // raw -> clientSecret
 	}
 
 	DB.Create(&client)
 
-	user := model.User{
+	user := entities.User{
 		Username: "testUser",
 		Password: "$2a$12$ga6jVPJeORwhba8AmsoapemKDd1Z2CuFIi4bhXZapjNxnaHpHXcj6", // -> strongPassword
 		Client:   client,

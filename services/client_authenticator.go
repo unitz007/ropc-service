@@ -4,12 +4,12 @@ import (
 	"errors"
 	"golang.org/x/crypto/bcrypt"
 	"log"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 	"ropc-service/repositories"
 )
 
 type ClientAuthenticatorContract interface {
-	Authenticate(clientId, clientSecret string) (*model.Client, error)
+	Authenticate(clientId, clientSecret string) (*entities.Client, error)
 }
 
 type ClientAuthenticator struct {
@@ -22,7 +22,7 @@ func InstantiateClientAuthenticator() *ClientAuthenticator {
 	}
 }
 
-func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*model.Client, error) {
+func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
 
 	client, err := selfC.repository.GetClient(clientId)
 	if err != nil {

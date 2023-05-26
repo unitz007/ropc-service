@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	model "ropc-service/model"
+	"ropc-service/model/entities"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -14,19 +14,19 @@ type UserRepository struct {
 }
 
 // GetUser provides a mock function with given fields: username
-func (_m *UserRepository) GetUser(username string) (*model.User, error) {
+func (_m *UserRepository) GetUser(username string) (*entities.User, error) {
 	ret := _m.Called(username)
 
-	var r0 *model.User
+	var r0 *entities.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string) (*model.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(string) (*entities.User, error)); ok {
 		return rf(username)
 	}
-	if rf, ok := ret.Get(0).(func(string) *model.User); ok {
+	if rf, ok := ret.Get(0).(func(string) *entities.User); ok {
 		r0 = rf(username)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*model.User)
+			r0 = ret.Get(0).(*entities.User)
 		}
 	}
 
@@ -40,23 +40,23 @@ func (_m *UserRepository) GetUser(username string) (*model.User, error) {
 }
 
 // GetUserAndClient provides a mock function with given fields: user, client
-func (_m *UserRepository) GetUserAndClient(user *model.User, client *model.Client) (*model.User, error) {
+func (_m *UserRepository) GetUserAndClient(user *entities.User, client *entities.Client) (*entities.User, error) {
 	ret := _m.Called(user, client)
 
-	var r0 *model.User
+	var r0 *entities.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*model.User, *model.Client) (*model.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(*entities.User, *entities.Client) (*entities.User, error)); ok {
 		return rf(user, client)
 	}
-	if rf, ok := ret.Get(0).(func(*model.User, *model.Client) *model.User); ok {
+	if rf, ok := ret.Get(0).(func(*entities.User, *entities.Client) *entities.User); ok {
 		r0 = rf(user, client)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*model.User)
+			r0 = ret.Get(0).(*entities.User)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*model.User, *model.Client) error); ok {
+	if rf, ok := ret.Get(1).(func(*entities.User, *entities.Client) error); ok {
 		r1 = rf(user, client)
 	} else {
 		r1 = ret.Error(1)

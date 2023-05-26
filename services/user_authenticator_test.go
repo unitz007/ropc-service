@@ -5,7 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"ropc-service/mocks"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 	"testing"
 )
 
@@ -21,7 +21,7 @@ func Test_UserAuthenticationFailure(t *testing.T) {
 
 	// should fail with wrong password combination
 	userAuthenticator, userRepositoryMock = resetUserAuthenticatorMock()
-	userRepositoryMock.On("GetUser", rightUsername).Return(&model.User{Username: rightUsername, Password: hashedRightPassword}, nil)
+	userRepositoryMock.On("GetUser", rightUsername).Return(&entities.User{Username: rightUsername, Password: hashedRightPassword}, nil)
 	user, err = userAuthenticator.Authenticate(rightUsername, wrongPassword)
 	assert.EqualError(t, err, "invalid user credentials")
 	assert.Nil(t, user)
@@ -29,7 +29,7 @@ func Test_UserAuthenticationFailure(t *testing.T) {
 
 	// test with right encryption but still wrong password nonetheless, should fail
 	userAuthenticator, userRepositoryMock = resetUserAuthenticatorMock()
-	userRepositoryMock.On("GetUser", rightUsername).Return(&model.User{Username: rightUsername, Password: hashedRightPassword}, nil)
+	userRepositoryMock.On("GetUser", rightUsername).Return(&entities.User{Username: rightUsername, Password: hashedRightPassword}, nil)
 	user, err = userAuthenticator.Authenticate(rightUsername, wrongPassword)
 	assert.EqualError(t, err, "invalid user credentials")
 	assert.Nil(t, user)
@@ -42,7 +42,7 @@ func Test_UserAuthenticationSuccess(t *testing.T) {
 	// successful authentication
 	userAuthenticator, userRepositoryMock := resetUserAuthenticatorMock()
 
-	userRepositoryMock.On("GetUser", rightUsername).Return(&model.User{Username: rightUsername, Password: hashedRightPassword}, nil)
+	userRepositoryMock.On("GetUser", rightUsername).Return(&entities.User{Username: rightUsername, Password: hashedRightPassword}, nil)
 	user, err := userAuthenticator.Authenticate(rightUsername, rightPassword)
 	assert.NotNil(t, user)
 	assert.Nil(t, err)

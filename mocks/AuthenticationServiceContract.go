@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	model "ropc-service/model"
+	model "ropc-service/model/entities"
 
 	mock "github.com/stretchr/testify/mock"
 

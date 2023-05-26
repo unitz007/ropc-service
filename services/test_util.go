@@ -1,6 +1,8 @@
 package services
 
-import "ropc-service/model"
+import (
+	"ropc-service/model/entities"
+)
 
 var (
 	// test user details
@@ -10,12 +12,12 @@ var (
 	wrongUsername       = "wrong_username"
 	hashedRightPassword = "$2a$12$JadjhGXumDBw.8X9o0.EaeNkIDaeGtmHkAmxfgrqApaFT0t.ZVrm."
 
-	rightTestUser = model.User{
+	rightTestUser = entities.User{
 		Username: rightUsername,
 		Password: rightPassword,
 	}
 
-	wrongTestUser = model.User{
+	wrongTestUser = entities.User{
 		Username: wrongUsername,
 		Password: wrongPassword,
 	}
@@ -27,12 +29,12 @@ var (
 	wrongClientSecret       = "wrong_clientSecret"
 	hashedRightClientSecret = "$2a$12$0TUqBhM9DdBw980nTxz1EuL3eM/jQQSABDVuO6/lrCsjuUCOCFdxy"
 
-	rightClient = model.Client{
+	rightClient = entities.Client{
 		ClientId:     rightClientId,
 		ClientSecret: rightClientSecret,
 	}
 
-	wrongClient = model.Client{
+	wrongClient = entities.Client{
 		ClientId:     wrongClientId,
 		ClientSecret: wrongClientSecret,
 	}

@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"ropc-service/dto"
-	"ropc-service/model"
+	"ropc-service/model/dto"
+	"ropc-service/model/entities"
 	"ropc-service/services"
 )
 
@@ -17,19 +17,19 @@ func Authentication(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(400, &model.Response{Message: "Invalid request body"})
+		ctx.JSON(400, &dto.Response{Message: "Invalid request body"})
 		return
 	}
 
 	userAuthenticator := services.InstantiateUserAuthenticator()
 	clientAuthenticator := services.InstantiateClientAuthenticator()
 
-	user := &model.User{
+	user := &entities.User{
 		Username: loginRequest.Username,
 		Password: loginRequest.Password,
 	}
 
-	client := &model.Client{
+	client := &entities.Client{
 		ClientId:     loginRequest.ClientId,
 		ClientSecret: loginRequest.ClientSecret,
 		GrantType:    loginRequest.GrantType,
@@ -37,11 +37,11 @@ func Authentication(ctx *gin.Context) {
 
 	token, err := services.InstantiateAuthenticator(userAuthenticator, clientAuthenticator).Authenticate(user, client)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, &model.Response{Message: err.Error()})
+		ctx.JSON(http.StatusUnauthorized, &dto.Response{Message: err.Error()})
 		return
 	}
 
-	ctx.JSON(200, &model.Response{
+	ctx.JSON(200, &dto.Response{
 		Message: "Authentication Successful",
 		Payload: token,
 	})

@@ -1,11 +1,12 @@
 package services
 
 import (
-	"ropc-service/model"
+	"ropc-service/model/dto"
+	"ropc-service/model/entities"
 )
 
 type AuthenticationService interface {
-	Authenticate(user *model.User, client *model.Client) (*model.Token, error)
+	Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error)
 }
 
 type AuthenticationServiceImpl struct {
@@ -20,7 +21,7 @@ func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticat
 	}
 }
 
-func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *model.Client) (*model.Token, error) {
+func (selfC AuthenticationServiceImpl) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
 
 	channel := make(chan any, 2)
 
@@ -42,18 +43,18 @@ func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *mo
 		channel <- c
 	}()
 
-	var u2 *model.User
-	var c2 *model.Client
+	var u2 *entities.User
+	var c2 *entities.Client
 
 	for val := range channel {
 		if err, ok := val.(error); ok && err != nil {
 			return nil, err
 		} else {
-			if u, ok := val.(*model.User); ok {
+			if u, ok := val.(*entities.User); ok {
 				u2 = u
 			}
 
-			if c, ok := val.(*model.Client); ok {
+			if c, ok := val.(*entities.Client); ok {
 				c2 = c
 			}
 		}
@@ -68,7 +69,7 @@ func (selfC AuthenticationServiceImpl) Authenticate(user *model.User, client *mo
 		return nil, err
 	}
 
-	token := &model.Token{AccessToken: accessToken}
+	token := &dto.Token{AccessToken: accessToken}
 
 	return token, nil
 }

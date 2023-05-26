@@ -5,7 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"ropc-service/mocks"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 	"testing"
 )
 
@@ -21,7 +21,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 
 	// should fail with unencrypted client secret in database
 	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&model.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
+	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
 	user, err = clientAuthenticator.Authenticate(rightClientId, wrongClientSecret)
 	assert.EqualError(t, err, "invalid client credentials")
 	assert.Nil(t, user)
@@ -29,7 +29,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 
 	// should fail with wrong client secret
 	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&model.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
+	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 	user, err = clientAuthenticator.Authenticate(rightClientId, wrongClientSecret)
 	assert.EqualError(t, err, "invalid client credentials")
 	assert.Nil(t, user)
@@ -41,7 +41,7 @@ func Test_ClientAuthenticationSuccess(t *testing.T) {
 	// successful authentication
 	clientAuthenticator, clientRepositoryMock := resetClientAuthenticatorMock()
 
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&model.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
+	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 	client, err := clientAuthenticator.Authenticate(rightClientId, rightClientSecret)
 	assert.NotNil(t, client)
 	assert.Nil(t, err)

@@ -5,7 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"ropc-service/mocks"
-	"ropc-service/model"
+	"ropc-service/model/entities"
 	"testing"
 )
 
@@ -19,7 +19,7 @@ func Test_AuthenticationFailure(t *testing.T) {
 
 	// assertions for user authentication
 	userAuthenticatorMock.On("Authenticate", wrongUsername, wrongPassword).Return(nil, errors.New("invalid user credentials"))
-	token, err := authenticatorServiceTest.Authenticate(&wrongTestUser, &model.Client{})
+	token, err := authenticatorServiceTest.Authenticate(&wrongTestUser, &entities.Client{})
 	assert.EqualError(t, err, "invalid user credentials")
 	assert.Nil(t, token, "token should be nil")
 
