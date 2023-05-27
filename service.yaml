@@ -8,10 +8,8 @@ spec:
   selector:
     app: ropc-backend
   ports:
-    - port: 80
-      targetPort: 3000
+    - port: 3000
   type: LoadBalancer
-
 
 ---
 apiVersion: v1
@@ -24,5 +22,4 @@ spec:
     app: ropc-db
   ports:
     - port: 3306
-      targetPort: 3306
-  type: LoadBalancer
+  type: ClusterIP

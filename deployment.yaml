@@ -20,7 +20,7 @@ spec:
         - name: ropc-service-container
           image: unitz007/ropc-service:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
           env:
             - name: DB_HOST
               value: ropc-db
@@ -37,21 +37,9 @@ spec:
             - name: TOKEN_EXPIRY
               value: "5"
             - name: GIN_MODE
-              value: release
+              value: debug
             - name: SERVER_PORT
               value: "3000"
-#            - name: POD_NAME
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: metadata.name
-#            - name: POD_NAMESPACE
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: metadata.namespace
-#            - name: POD_IP
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: status.podIP
 
 ---
 apiVersion: apps/v1
@@ -81,15 +69,3 @@ spec:
               value: dbPassword
             - name: MARIADB_DATABASE
               value: ropc
-#            - name: POD_NAME
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: metadata.name
-#            - name: POD_NAMESPACE
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: metadata.namespace
-#            - name: POD_IP
-#              valueFrom:
-#                fieldRef:
-#                  fieldPath: status.podIP
