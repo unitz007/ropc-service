@@ -32,8 +32,6 @@ func main() {
 		router.GET("/", func(context *gin.Context) {
 
 			accessToken := context.GetHeader("Authorization")
-			log.Println(accessToken)
-
 			if accessToken == "" {
 				log.Println("No access token")
 				context.HTML(http.StatusUnauthorized, "white_label.html", gin.H{})
