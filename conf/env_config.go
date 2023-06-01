@@ -19,29 +19,44 @@ type Config struct {
 	GinMode          string
 }
 
-var GlobalConfig Config
+const (
+	configFileName          = ".env"
+	configFileErrorMessage  = "Could not find config file: " + configFileName
+	dbHost                  = "DB_HOST"
+	dbPort                  = "DB_PORT"
+	dbUser                  = "DB_USER"
+	serverPort              = "SERVER_PORT"
+	ginMode                 = "GIN_MODE"
+	tokenSecret             = "TOKEN_SECRET"
+	dbName                  = "DB_NAME"
+	dbPassword              = "DB_PASSWORD"
+	tokenExpiry             = "TOKEN_EXPIRY"
+	tokenExpiryErrorMessage = "invalid token expiry"
+)
 
-func LoadConfig() Config {
+var GlobalConfig *Config
+
+func LoadConfig() *Config {
 
 	// load .env file
-	err := godotenv.Load(".env")
+	err := godotenv.Load(configFileName)
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal(configFileErrorMessage)
 	}
 
-	GlobalConfig = Config{
-		DatabaseHost:     os.Getenv("DB_HOST"),
-		DatabasePort:     os.Getenv("DB_PORT"),
-		DatabaseUser:     os.Getenv("DB_USER"),
-		ServerPort:       os.Getenv("SERVER_PORT"),
-		GinMode:          os.Getenv("GIN_MODE"),
-		TokenSecret:      os.Getenv("TOKEN_SECRET"),
-		DatabaseName:     os.Getenv("DB_NAME"),
-		DatabasePassword: os.Getenv("DB_PASSWORD"),
+	GlobalConfig = &Config{
+		DatabaseHost:     os.Getenv(dbHost),
+		DatabasePort:     os.Getenv(dbPort),
+		DatabaseUser:     os.Getenv(dbUser),
+		ServerPort:       os.Getenv(serverPort),
+		GinMode:          os.Getenv(ginMode),
+		TokenSecret:      os.Getenv(tokenSecret),
+		DatabaseName:     os.Getenv(dbName),
+		DatabasePassword: os.Getenv(dbPassword),
 		TokenExpiry: func() int {
-			val, err := strconv.Atoi(os.Getenv("TOKEN_EXPIRY"))
+			val, err := strconv.Atoi(os.Getenv(tokenExpiry))
 			if err != nil {
-				log.Fatal("Error: Could not load token expiry")
+				log.Fatal(tokenExpiryErrorMessage)
 			}
 			return val
 		}(),

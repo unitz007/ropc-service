@@ -1,27 +1,57 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"ropc-service/conf"
 	"ropc-service/handlers"
+	"ropc-service/utils"
 )
 
 func main() {
+	environmentConfig := conf.LoadConfig() // load environment configuration
+	conf.InitGormConfig(environmentConfig) // initialize database
 
-	globalConfig := conf.LoadConfig()
-	conf.InitGormConfig(&globalConfig)
+	// set up request handlers
+	requestHandlers := func(router *gin.Engine) {
 
-	gin.SetMode(globalConfig.GinMode)
+		// authenticate
+		router.POST("/login", handlers.Authentication)
+		router.GET("/login", func(context *gin.Context) {
+			context.HTML(http.StatusOK, "login.html", gin.H{})
+		})
 
-	router := gin.Default()
-	router.Use(gin.Recovery())
+		// user
+		router.POST("/users", handlers.CreateUser)
+		router.GET("/register", func(context *gin.Context) {
+			context.HTML(http.StatusOK, "register.html", gin.H{})
+		})
 
-	router.POST("/login", handlers.Authentication)
+		// secured resource
+		router.GET("/", func(context *gin.Context) {
 
-	err := router.Run(fmt.Sprintf(":%s", globalConfig.ServerPort))
-	if err != nil {
-		log.Fatal(err)
+			accessToken := context.GetHeader("Authorization")
+			log.Println(accessToken)
+
+			if accessToken == "" {
+				log.Println("No access token")
+				context.HTML(http.StatusUnauthorized, "white_label.html", gin.H{})
+				return
+			}
+
+			_, err := utils.ValidateToken(accessToken)
+			if err != nil {
+				log.Println(err)
+				context.HTML(http.StatusUnauthorized, "login.html", gin.H{})
+				return
+			}
+
+			context.HTML(http.StatusOK, "index.html", gin.H{})
+		})
+
 	}
+
+	// load gin context
+	conf.InitGinContext(environmentConfig, requestHandlers)
 }

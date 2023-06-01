@@ -26,5 +26,6 @@ GOOS="linux" GOARCH="amd64" go build .
 # build container image
 docker build -t ropc-service .
 
+
 # deploy image
 docker-compose up -d

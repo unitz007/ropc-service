@@ -9,6 +9,7 @@ import (
 
 type UserRepository interface {
 	GetUser(username string) (*entities.User, error)
+	CreateUser(user *entities.User) (*entities.User, error)
 }
 
 type UserRepositoryImpl struct {
@@ -24,7 +25,7 @@ func NewUserRepository() *UserRepositoryImpl {
 func (selfC UserRepositoryImpl) GetUser(username string) (*entities.User, error) {
 	var user entities.User
 
-	err := selfC.db.Model(&entities.User{}).Where("username = ?", username).Preload("Client").First(&user).Error
+	err := selfC.db.Model(&entities.User{}).Where("username = ?", username).Find(&user).Error
 	if err != nil {
 		return nil, errors.New("invalid user credentials")
 	}
@@ -32,14 +33,11 @@ func (selfC UserRepositoryImpl) GetUser(username string) (*entities.User, error)
 	return &user, nil
 }
 
-func (selfC UserRepositoryImpl) GetUserAndClient(u *entities.User, client *entities.Client) (*entities.User, error) {
+func (selfC UserRepositoryImpl) CreateUser(user *entities.User) (*entities.User, error) {
 
-	var user *entities.User
-
-	err := selfC.db.Where("username = ? and client_id = ?", u.Username, client.ClientId).First(&user).Error
-
+	err := selfC.db.Create(user).Error
 	if err != nil {
-		return nil, errors.New("invalid credential")
+		return nil, err
 	}
 
 	return user, nil

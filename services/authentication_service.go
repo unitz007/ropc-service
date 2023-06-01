@@ -1,8 +1,10 @@
 package services
 
 import (
+	"ropc-service/authenticators"
 	"ropc-service/model/dto"
 	"ropc-service/model/entities"
+	"ropc-service/utils"
 )
 
 type AuthenticatorContract interface {
@@ -10,11 +12,11 @@ type AuthenticatorContract interface {
 }
 
 type Authenticator struct {
-	userAuthenticator   UserAuthenticatorContract
-	clientAuthenticator ClientAuthenticatorContract
+	userAuthenticator   authenticators.UserAuthenticatorContract
+	clientAuthenticator authenticators.ClientAuthenticatorContract
 }
 
-func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticatorContract) *Authenticator {
+func InstantiateAuthenticator(uA authenticators.UserAuthenticatorContract, cA authenticators.ClientAuthenticatorContract) *Authenticator {
 	return &Authenticator{
 		userAuthenticator:   uA,
 		clientAuthenticator: cA,
@@ -23,48 +25,17 @@ func InstantiateAuthenticator(uA UserAuthenticatorContract, cA ClientAuthenticat
 
 func (selfC Authenticator) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
 
-	channel := make(chan any, 2)
-
-	go func() {
-		u, err := selfC.userAuthenticator.Authenticate(user.Username, user.Password)
-		if err != nil {
-			channel <- err
-			return
-		}
-		channel <- u
-	}()
-
-	go func() {
-		c, err := selfC.clientAuthenticator.Authenticate(client.ClientId, client.ClientSecret)
-		if err != nil {
-			channel <- err
-			return
-		}
-		channel <- c
-	}()
-
-	var u2 *entities.User
-	var c2 *entities.Client
-
-	for val := range channel {
-		if err, ok := val.(error); ok && err != nil {
-			return nil, err
-		} else {
-			if u, ok := val.(*entities.User); ok {
-				u2 = u
-			}
-
-			if c, ok := val.(*entities.Client); ok {
-				c2 = c
-			}
-		}
-
-		if u2 != nil && c2 != nil {
-			break
-		}
+	u, err := selfC.userAuthenticator.Authenticate(user.Username, user.Password)
+	if err != nil {
+		return nil, err
 	}
 
-	accessToken, err := GenerateToken(u2, c2)
+	c, err := selfC.clientAuthenticator.Authenticate(client.ClientId, client.ClientSecret)
+	if err != nil {
+		return nil, err
+	}
+
+	accessToken, err := utils.GenerateToken(u, c)
 	if err != nil {
 		return nil, err
 	}

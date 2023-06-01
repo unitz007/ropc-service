@@ -4,8 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"ropc-service/authenticators"
 	"ropc-service/model/dto"
 	"ropc-service/model/entities"
+	"ropc-service/repositories"
 	"ropc-service/services"
 )
 
@@ -17,12 +19,15 @@ func Authentication(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(400, &dto.Response{Message: "Invalid request body"})
+		ctx.JSON(http.StatusBadRequest, &dto.Response{Message: "Invalid request body"})
 		return
 	}
 
-	userAuthenticator := services.InstantiateUserAuthenticator()
-	clientAuthenticator := services.InstantiateClientAuthenticator()
+	userRepository := repositories.NewUserRepository()
+	clientRepository := repositories.NewClientRepository()
+
+	userAuthenticator := authenticators.InstantiateUserAuthenticator(userRepository)
+	clientAuthenticator := authenticators.InstantiateClientAuthenticator(clientRepository)
 
 	user := &entities.User{
 		Username: loginRequest.Username,

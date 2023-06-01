@@ -9,6 +9,7 @@ import (
 
 type ClientRepository interface {
 	GetClient(clientId string) (*entities.Client, error)
+	GetClients() []entities.Client
 }
 
 type ClientRepositoryImpl struct {
@@ -29,4 +30,13 @@ func (c ClientRepositoryImpl) GetClient(clientId string) (*entities.Client, erro
 	}
 
 	return &client, nil
+}
+
+func (c ClientRepositoryImpl) GetClients() []entities.Client {
+
+	var clients []entities.Client
+
+	c.db.Find(&clients)
+
+	return clients
 }

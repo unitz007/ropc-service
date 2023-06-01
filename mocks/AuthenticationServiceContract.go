@@ -3,9 +3,8 @@
 package mocks
 
 import (
-	model "ropc-service/model/entities"
-
 	mock "github.com/stretchr/testify/mock"
+	model "ropc-service/model/entities"
 
 	user "os/user"
 )

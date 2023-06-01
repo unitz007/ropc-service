@@ -2,6 +2,7 @@ package conf
 
 import (
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -39,18 +40,20 @@ func PreLoadData() {
 	log.Println("Preloading data")
 
 	client := entities.Client{
-		ClientId:     "testClient",
-		ClientSecret: "$2a$12$cUC8531lrEhDzRT2aOZr8eUkTRuP0mpyyRZ.nvKRBg9oL145RT8Lu", // raw -> clientSecret
+		ClientId: "testClient",
+		ClientSecret: func() string {
+			pass, _ := bcrypt.GenerateFromPassword([]byte("clientSecret"), 12) // raw -> clientSecret
+			return string(pass)
+		}(),
 	}
 
 	DB.Create(&client)
-
-	user := entities.User{
-		Username: "testUser",
-		Password: "$2a$12$ga6jVPJeORwhba8AmsoapemKDd1Z2CuFIi4bhXZapjNxnaHpHXcj6", // -> strongPassword
-		Client:   client,
-	}
-
-	DB.Create(&user)
+	//
+	//user := entities.User{
+	//	Username: "testUser",
+	//	Password: "$2a$12$ga6jVPJeORwhba8AmsoapemKDd1Z2CuFIi4bhXZapjNxnaHpHXcj6", // -> strongPassword
+	//}
+	//
+	//DB.Create(&user)
 
 }
