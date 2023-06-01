@@ -48,8 +48,9 @@ export default function login() {
                     }
                 }).then(v => {
                     if (v.status === 200) {
-                       v.text().then(text => {
-                           setTimeout(() => document.write(text), 1000);                       })
+                        v.text().then(text => {
+                            setTimeout(() => document.write(text), 1000);
+                        })
                     }
                 })
             })
