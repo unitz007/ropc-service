@@ -38,14 +38,18 @@ func main() {
 				return
 			}
 
-			_, err := utils.ValidateToken(accessToken)
+			claims, err := utils.ValidateToken(accessToken)
 			if err != nil {
 				log.Println(err)
 				context.HTML(http.StatusUnauthorized, "login.html", gin.H{})
 				return
 			}
 
-			context.HTML(http.StatusOK, "index.html", gin.H{})
+			context.HTML(http.StatusOK, "index.html", gin.H{
+				"username":  claims["username"],
+				"client_id": claims["client_id"],
+				"email":     claims["email"],
+			})
 		})
 
 	}

@@ -11,11 +11,10 @@ func GenerateToken(user *entities.User, client *entities.Client) (string, error)
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 
-	//expiryInMinutes := conf.GlobalConfig.TokenExpiry
-
 	claims["username"] = user.Username
 	claims["client_id"] = client.ClientId
 	claims["grant_type"] = client.GrantType
+	claims["email"] = user.Email
 
 	return token.SignedString([]byte(conf.GlobalConfig.TokenSecret))
 }
