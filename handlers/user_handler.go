@@ -25,8 +25,8 @@ func CreateUser(ctx *gin.Context) {
 	_, err = userService.CreateUser(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, &dto.Response{
-			Message: "Could not create user",
-			Payload: err.Error(),
+			Message: err.Error(),
+			Payload: nil,
 		})
 		return
 	}

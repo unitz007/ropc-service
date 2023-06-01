@@ -32,6 +32,19 @@ func (selfC DefaultUserService) CreateUser(user *entities.User) (*entities.User,
 		return nil, errors.New("email is required")
 	}
 
+	existingUser, _ := selfC.repository.GetUserByUsernameOrEmail(user.Username, user.Email)
+
+	if existingUser != nil {
+		if existingUser.Username == user.Username {
+			return nil, errors.New("A user with this username already exists")
+		}
+
+		if existingUser.Email == user.Email {
+			return nil, errors.New("A user with this email already exists")
+		}
+
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 5)
 	user.Password = string(hashedPassword)
 

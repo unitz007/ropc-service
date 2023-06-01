@@ -37,7 +37,7 @@ spec:
             - name: TOKEN_EXPIRY
               value: "5"
             - name: GIN_MODE
-              value: debug
+              value: release
             - name: SERVER_PORT
               value: "3000"
 

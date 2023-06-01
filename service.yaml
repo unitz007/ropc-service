@@ -9,6 +9,7 @@ spec:
     app: ropc-backend
   ports:
     - port: 3000
+      targetPort: 3000
   type: LoadBalancer
 
 ---

@@ -39,17 +39,17 @@ func (_m *UserRepository) CreateUser(user *entities.User) (*entities.User, error
 	return r0, r1
 }
 
-// GetUser provides a mock function with given fields: username
-func (_m *UserRepository) GetUser(username string) (*entities.User, error) {
-	ret := _m.Called(username)
+// GetUser provides a mock function with given fields: usernameOrEmail
+func (_m *UserRepository) GetUser(usernameOrEmail string) (*entities.User, error) {
+	ret := _m.Called(usernameOrEmail)
 
 	var r0 *entities.User
 	var r1 error
 	if rf, ok := ret.Get(0).(func(string) (*entities.User, error)); ok {
-		return rf(username)
+		return rf(usernameOrEmail)
 	}
 	if rf, ok := ret.Get(0).(func(string) *entities.User); ok {
-		r0 = rf(username)
+		r0 = rf(usernameOrEmail)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*entities.User)
@@ -57,7 +57,33 @@ func (_m *UserRepository) GetUser(username string) (*entities.User, error) {
 	}
 
 	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(username)
+		r1 = rf(usernameOrEmail)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetUserByUsernameOrEmail provides a mock function with given fields: username, email
+func (_m *UserRepository) GetUserByUsernameOrEmail(username string, email string) (*entities.User, error) {
+	ret := _m.Called(username, email)
+
+	var r0 *entities.User
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string, string) (*entities.User, error)); ok {
+		return rf(username, email)
+	}
+	if rf, ok := ret.Get(0).(func(string, string) *entities.User); ok {
+		r0 = rf(username, email)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*entities.User)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(string, string) error); ok {
+		r1 = rf(username, email)
 	} else {
 		r1 = ret.Error(1)
 	}
