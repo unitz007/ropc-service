@@ -29,7 +29,7 @@ var (
 	WrongClientSecret       = "wrong_clientSecret"
 	hashedRightClientSecret = "$2a$12$0TUqBhM9DdBw980nTxz1EuL3eM/jQQSABDVuO6/lrCsjuUCOCFdxy"
 
-	rightClient = entities.Client{
+	_ = entities.Client{
 		ClientId:     rightClientId,
 		ClientSecret: rightClientSecret,
 	}

@@ -1,4 +1,4 @@
-import {basePath, clientId, clientSecret, loginPath, timeOut} from "/assets/js/config.js";
+import {basePath, clientId, clientSecret, loginPath} from "/assets/js/config.js";
 
 class LoginRequest {
 
