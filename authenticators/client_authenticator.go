@@ -31,7 +31,7 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(client.ClientSecret), []byte(clientSecret)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
-		log.Println("err", err)
+		log.Println(err)
 		return nil, errors.New("invalid client credentials")
 	}
 

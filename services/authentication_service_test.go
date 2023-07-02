@@ -16,7 +16,7 @@ var (
 
 func Test_AuthenticationFailure(t *testing.T) {
 
-	t.Skip("Skipping authentication test")
+	//t.Skip("Skipping authentication test")
 
 	// assertions for user authentication
 	userAuthenticatorMock.On("Authenticate", authenticators.WrongUsername, authenticators.WrongPassword).Return(nil, errors.New("invalid user credentials"))

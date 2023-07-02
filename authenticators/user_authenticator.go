@@ -32,7 +32,7 @@ func (selfC UserAuthenticator) Authenticate(username, password string) (*entitie
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
-		log.Println("err", err)
+		log.Println(err)
 		return nil, errors.New("invalid user credentials")
 	}
 
