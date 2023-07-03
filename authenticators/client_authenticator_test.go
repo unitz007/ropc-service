@@ -118,4 +118,20 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		}
 	})
 
+	t.Run("Successful client third part authentication", func(t *testing.T) {
+
+		success := true
+
+		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
+		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(&success, nil)
+
+		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+		client, _ := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
+
+		if client == nil {
+			t.Fatal("Expected client but got nil")
+		}
+
+	})
+
 }
