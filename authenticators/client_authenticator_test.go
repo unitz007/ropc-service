@@ -92,6 +92,10 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		if err == nil {
 			t.Fatal("Error is expected but got nil")
 		}
+
+		if err.Error() != InvalidClientMessage {
+			t.Errorf("Expected %s but got %s", InvalidClientMessage, err.Error())
+		}
 	})
 
 }
