@@ -10,18 +10,20 @@ type ThirdPartyClientAuthenticator struct {
 }
 
 // Authenticate provides a mock function with given fields: clientID, clientSecret
-func (_m *ThirdPartyClientAuthenticator) Authenticate(clientID string, clientSecret string) (bool, error) {
+func (_m *ThirdPartyClientAuthenticator) Authenticate(clientID string, clientSecret string) (*bool, error) {
 	ret := _m.Called(clientID, clientSecret)
 
-	var r0 bool
+	var r0 *bool
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string, string) (bool, error)); ok {
+	if rf, ok := ret.Get(0).(func(string, string) (*bool, error)); ok {
 		return rf(clientID, clientSecret)
 	}
-	if rf, ok := ret.Get(0).(func(string, string) bool); ok {
+	if rf, ok := ret.Get(0).(func(string, string) *bool); ok {
 		r0 = rf(clientID, clientSecret)
 	} else {
-		r0 = ret.Get(0).(bool)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*bool)
+		}
 	}
 
 	if rf, ok := ret.Get(1).(func(string, string) error); ok {

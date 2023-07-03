@@ -30,7 +30,7 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 
 	if strings.HasPrefix(clientId, "mbb_") {
 		ok, _ := selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
-		if !ok {
+		if *ok == false {
 			return nil, errors.New(InvalidClientMessage)
 
 		}

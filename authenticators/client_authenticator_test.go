@@ -83,9 +83,12 @@ func Test_ThirdPartyValidation(t *testing.T) {
 
 	t.Run("Third party failed authentication", func(t *testing.T) {
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
-		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(false, nil)
+		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(nil, nil)
 
-		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+		clientAuthenticator := ClientAuthenticator{
+			repository:                    clientRepositoryMock,
+			thirdPartyClientAuthenticator: thirdPartyAuthenticatorMock,
+		}
 
 		_, err := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
 
@@ -96,6 +99,23 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		if err.Error() != InvalidClientMessage {
 			t.Errorf("Expected %s but got %s", InvalidClientMessage, err.Error())
 		}
+	})
+
+	t.Run("Request to third party failed (timeout)", func(t *testing.T) {
+		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
+		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(nil, errors.New("request to third party failed"))
+
+		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+
+		_, err := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
+		if err == nil {
+			t.Fatal("Error is expected but got nil")
+		}
+
+		if err.Error() != InvalidClientMessage {
+			t.Errorf("Expected %s but got %s", InvalidClientMessage, err.Error())
+		}
+
 	})
 
 }
