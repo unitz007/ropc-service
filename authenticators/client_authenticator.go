@@ -35,7 +35,7 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 			return nil, errors.New(InvalidClientMessage)
 		}
 
-		if *ok == false {
+		if !*ok {
 			return nil, errors.New(InvalidClientMessage)
 
 		}

@@ -7,3 +7,6 @@ This is an implementation of Resource Owner Password Credentials using for backe
 2. Navigate to project directory `cd ropc-service`
 3. Execute deployment script: `./deployment.sh`
 4. Access Web application url on your web browser: `https://localhost:3000`
+
+## TESTING ##
+Run Unit Tests using `go test ./...`
