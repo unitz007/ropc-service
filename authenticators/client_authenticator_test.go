@@ -57,3 +57,31 @@ func resetClientAuthenticatorMock() (*ClientAuthenticator, *mocks.ClientReposito
 
 	return clientAuthenticatorMock, clientRepositoryMock
 }
+
+func Test_ThirdPartyValidation(t *testing.T) {
+
+	thirdPartyClient := "mbb_85893922"
+
+	t.Run("Should call third party validation", func(t *testing.T) {
+		client := &entities.Client{
+			ClientId:     thirdPartyClient,
+			ClientSecret: "3456677",
+		}
+
+		clientRepositoryMock := new(mocks.ClientRepository)
+		thirdPartyAuthenticatorMock := new(mocks.ThirdPartyClientAuthenticator)
+
+		clientRepositoryMock.On("GetClient", thirdPartyClient).Return(client, nil)
+		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(false, nil)
+
+		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+
+		_, _ = clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
+
+		clientRepositoryMock.AssertNotCalled(t, "GetClient", thirdPartyClient)
+
+		thirdPartyAuthenticatorMock.AssertCalled(t, "Authenticate", thirdPartyClient, mock.Anything)
+
+	})
+
+}

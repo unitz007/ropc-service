@@ -6,6 +6,7 @@ import (
 	"log"
 	"ropc-service/model/entities"
 	"ropc-service/repositories"
+	"strings"
 )
 
 type ClientAuthenticatorContract interface {
@@ -13,7 +14,8 @@ type ClientAuthenticatorContract interface {
 }
 
 type ClientAuthenticator struct {
-	repository repositories.ClientRepository
+	repository                    repositories.ClientRepository
+	thirdPartyClientAuthenticator ThirdPartyClientAuthenticator
 }
 
 func InstantiateClientAuthenticator(repository repositories.ClientRepository) *ClientAuthenticator {
@@ -23,6 +25,11 @@ func InstantiateClientAuthenticator(repository repositories.ClientRepository) *C
 }
 
 func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
+
+	if strings.HasPrefix(clientId, "mbb_") {
+		_, _ = selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
+		return nil, nil
+	}
 
 	client, err := selfC.repository.GetClient(clientId)
 	if err != nil {
