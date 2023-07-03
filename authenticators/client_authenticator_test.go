@@ -13,9 +13,9 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 
 	// should fail if client does not exist
 	clientAuthenticator, clientRepositoryMock := resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New("invalid client"))
+	clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
 	user, err := clientAuthenticator.Authenticate(WrongUsername, mock.Anything)
-	assert.Equal(t, err.Error(), "invalid client")
+	assert.Equal(t, err.Error(), InvalidClientMessage)
 	assert.Nil(t, user)
 	clientRepositoryMock.AssertCalled(t, "GetClient", mock.Anything)
 
@@ -23,7 +23,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
 	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
 	user, err = clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
-	assert.EqualError(t, err, "invalid client credentials")
+	assert.EqualError(t, err, InvalidClientMessage)
 	assert.Nil(t, user)
 	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
 
@@ -31,7 +31,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
 	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 	user, err = clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
-	assert.EqualError(t, err, "invalid client credentials")
+	assert.EqualError(t, err, InvalidClientMessage)
 	assert.Nil(t, user)
 	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
 }
@@ -61,17 +61,14 @@ func resetClientAuthenticatorMock() (*ClientAuthenticator, *mocks.ClientReposito
 func Test_ThirdPartyValidation(t *testing.T) {
 
 	thirdPartyClient := "mbb_85893922"
+	var clientRepositoryMock *mocks.ClientRepository
+	var thirdPartyAuthenticatorMock *mocks.ThirdPartyClientAuthenticator
 
 	t.Run("Should call third party validation", func(t *testing.T) {
-		client := &entities.Client{
-			ClientId:     thirdPartyClient,
-			ClientSecret: "3456677",
-		}
+		clientRepositoryMock = new(mocks.ClientRepository)
+		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
 
-		clientRepositoryMock := new(mocks.ClientRepository)
-		thirdPartyAuthenticatorMock := new(mocks.ThirdPartyClientAuthenticator)
-
-		clientRepositoryMock.On("GetClient", thirdPartyClient).Return(client, nil)
+		clientRepositoryMock.On("GetClient", thirdPartyClient).Return(&entities.Client{}, nil)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(false, nil)
 
 		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
@@ -82,6 +79,22 @@ func Test_ThirdPartyValidation(t *testing.T) {
 
 		thirdPartyAuthenticatorMock.AssertCalled(t, "Authenticate", thirdPartyClient, mock.Anything)
 
+	})
+
+	t.Run("Third party failed authentication", func(t *testing.T) {
+		//clientRepositoryMock = new(mocks.ClientRepository)
+		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
+
+		//clientRepositoryMock.On("GetClient", thirdPartyClient).Return(&entities.Client{}, nil)
+		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(false, nil)
+
+		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+
+		_, err := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
+
+		if err == nil {
+			t.Fatal("Error is expected but got nil")
+		}
 	})
 
 }

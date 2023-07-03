@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const InvalidClientMessage = "invalid client credentials"
+
 type ClientAuthenticatorContract interface {
 	Authenticate(clientId, clientSecret string) (*entities.Client, error)
 }
@@ -39,7 +41,7 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 
 	if err = bcrypt.CompareHashAndPassword([]byte(client.ClientSecret), []byte(clientSecret)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
 		log.Println(err)
-		return nil, errors.New("invalid client credentials")
+		return nil, errors.New(InvalidClientMessage)
 	}
 
 	return client, nil
