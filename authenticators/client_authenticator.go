@@ -39,7 +39,8 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 			return nil, errors.New(InvalidClientMessage)
 
 		}
-		return nil, nil
+
+		return &entities.Client{ClientId: clientId, ClientSecret: clientSecret}, nil
 	}
 
 	client, err := selfC.repository.GetClient(clientId)
