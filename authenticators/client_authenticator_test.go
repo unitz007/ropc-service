@@ -82,10 +82,7 @@ func Test_ThirdPartyValidation(t *testing.T) {
 	})
 
 	t.Run("Third party failed authentication", func(t *testing.T) {
-		//clientRepositoryMock = new(mocks.ClientRepository)
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
-
-		//clientRepositoryMock.On("GetClient", thirdPartyClient).Return(&entities.Client{}, nil)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(false, nil)
 
 		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}

@@ -29,7 +29,10 @@ func InstantiateClientAuthenticator(repository repositories.ClientRepository) *C
 func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
 
 	if strings.HasPrefix(clientId, "mbb_") {
-		_, _ = selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
+		ok, _ := selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
+		if !ok {
+			return nil, errors.New(InvalidClientMessage)
+		}
 		return nil, nil
 	}
 
