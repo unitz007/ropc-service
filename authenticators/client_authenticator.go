@@ -32,6 +32,7 @@ func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*e
 		ok, _ := selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
 		if !ok {
 			return nil, errors.New(InvalidClientMessage)
+
 		}
 		return nil, nil
 	}
