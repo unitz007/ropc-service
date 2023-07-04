@@ -113,8 +113,8 @@ func Test_ThirdPartyValidation(t *testing.T) {
 			t.Fatal("Error is expected but got nil")
 		}
 
-		if err.Error() != "Could not authenticate client" {
-			t.Errorf("Expected %s but got %s", "Could not authenticate client", err.Error())
+		if err.Error() != "could not authenticate client" {
+			t.Errorf("Expected %s but got %s", "could not authenticate client", err.Error())
 		}
 	})
 
