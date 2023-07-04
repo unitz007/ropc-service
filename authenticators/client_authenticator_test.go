@@ -11,51 +11,67 @@ import (
 
 func Test_ClientAuthenticationFailure(t *testing.T) {
 
-	// should fail if client does not exist
-	clientAuthenticator, clientRepositoryMock := resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
-	user, err := clientAuthenticator.Authenticate(WrongUsername, mock.Anything)
-	assert.Equal(t, err.Error(), InvalidClientMessage)
-	assert.Nil(t, user)
-	clientRepositoryMock.AssertCalled(t, "GetClient", mock.Anything)
+	var clientRepositoryMock *mocks.ClientRepository
 
-	// should fail with unencrypted client secret in database
-	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
-	user, err = clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
-	assert.EqualError(t, err, InvalidClientMessage)
-	assert.Nil(t, user)
-	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+	t.Run("Client does not exist", func(t *testing.T) {
 
-	// should fail with wrong client secret
-	clientAuthenticator, clientRepositoryMock = resetClientAuthenticatorMock()
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
-	user, err = clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
-	assert.EqualError(t, err, InvalidClientMessage)
-	assert.Nil(t, user)
-	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+		clientRepositoryMock = new(mocks.ClientRepository)
+		clientAuthenticator := &ClientAuthenticator{
+			repository: clientRepositoryMock,
+		}
+		clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
+		user, err := clientAuthenticator.Authenticate(WrongUsername, mock.Anything)
+		assert.Equal(t, err.Error(), InvalidClientMessage)
+		assert.Nil(t, user)
+		clientRepositoryMock.AssertCalled(t, "GetClient", mock.Anything)
+
+	})
+
+	t.Run("Client with plain password on Database", func(t *testing.T) {
+
+		clientRepositoryMock = new(mocks.ClientRepository)
+		clientAuthenticator := &ClientAuthenticator{
+			repository: clientRepositoryMock,
+		}
+
+		// should fail with unencrypted client secret in database
+		clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
+		user, err := clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
+		assert.EqualError(t, err, InvalidClientMessage)
+		assert.Nil(t, user)
+		clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+
+	})
+
+	t.Run("Client with wrong secret", func(t *testing.T) {
+		clientRepositoryMock = new(mocks.ClientRepository)
+		clientAuthenticator := &ClientAuthenticator{
+			repository: clientRepositoryMock,
+		}
+
+		// should fail with wrong client secret
+		clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
+		user, err := clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
+		assert.EqualError(t, err, InvalidClientMessage)
+		assert.Nil(t, user)
+		clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+	})
+
 }
 
 func Test_ClientAuthenticationSuccess(t *testing.T) {
 
 	// successful authentication
-	clientAuthenticator, clientRepositoryMock := resetClientAuthenticatorMock()
+	clientRepositoryMock := new(mocks.ClientRepository)
+	clientAuthenticator := &ClientAuthenticator{
+		repository: clientRepositoryMock,
+	}
 
 	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 	client, err := clientAuthenticator.Authenticate(rightClientId, rightClientSecret)
 	assert.NotNil(t, client)
 	assert.Nil(t, err)
 	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
-}
-
-func resetClientAuthenticatorMock() (*ClientAuthenticator, *mocks.ClientRepository) {
-
-	clientRepositoryMock := new(mocks.ClientRepository)
-	clientAuthenticatorMock := &ClientAuthenticator{
-		repository: clientRepositoryMock,
-	}
-
-	return clientAuthenticatorMock, clientRepositoryMock
 }
 
 func Test_ThirdPartyValidation(t *testing.T) {
