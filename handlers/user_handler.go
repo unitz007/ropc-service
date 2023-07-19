@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"ropc-service/model/dto"
 	"ropc-service/model/entities"
@@ -9,31 +8,35 @@ import (
 	"ropc-service/services"
 )
 
-func CreateUser(ctx *gin.Context) {
+const (
+	UserCreated = "User created Successfully"
+)
 
-	var user *entities.User
+func CreateUser(response http.ResponseWriter, request *http.Request) {
 
-	err := ctx.BindJSON(&user)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, "Invalid request payload")
+	switch request.Method {
+	case http.MethodPost:
+		var user *entities.User
+
+		err := JsonToStruct(request.Body, &user)
+		if err != nil {
+			panic(err)
+		}
+
+		userRepository := repositories.NewUserRepository()
+		userService := services.NewUserService(userRepository)
+
+		_, err = userService.CreateUser(user)
+		if err != nil {
+			panic(err)
+
+		} else {
+			_ = PrintResponse(http.StatusCreated, response, dto.NewResponse(UserCreated, nil))
+		}
+
+		return
+	default:
+		response.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-
-	userRepository := repositories.NewUserRepository()
-	userService := services.NewUserService(userRepository)
-
-	_, err = userService.CreateUser(user)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, &dto.Response{
-			Message: err.Error(),
-			Payload: nil,
-		})
-		return
-	}
-
-	ctx.JSON(http.StatusCreated, &dto.Response{
-		Message: "User created Successfully",
-		Payload: nil,
-	})
-
 }
