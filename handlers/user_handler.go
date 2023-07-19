@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	UserCreated = "User created Successfully"
+	userCreated = "User created Successfully"
 )
 
 func CreateUser(response http.ResponseWriter, request *http.Request) {
@@ -31,7 +31,7 @@ func CreateUser(response http.ResponseWriter, request *http.Request) {
 			panic(err)
 
 		} else {
-			_ = PrintResponse(http.StatusCreated, response, dto.NewResponse(UserCreated, nil))
+			_ = PrintResponse(http.StatusCreated, response, dto.NewResponse(userCreated, nil))
 		}
 
 		return

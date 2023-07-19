@@ -15,7 +15,7 @@ func main() {
 	requestHandlers := func(mux *http.ServeMux) {
 
 		// authenticate
-		//mux.POST("/login", handlers.Authentication)
+		mux.HandleFunc("/login", middlewares.PanicRecovery(handlers.Authentication))
 		//mux.GET("/login", func(context *gin.Context) {
 		//	context.HTML(http.StatusOK, "login.html", gin.H{})
 		//})
