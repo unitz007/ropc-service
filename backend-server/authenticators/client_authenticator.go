@@ -12,22 +12,22 @@ import (
 const InvalidClientMessage = "invalid client credentials"
 const ConnectionErrorMessage = "could not authenticate client"
 
-type ClientAuthenticatorContract interface {
+type ClientAuthenticator interface {
 	Authenticate(clientId, clientSecret string) (*entities.Client, error)
 }
 
-type ClientAuthenticator struct {
+type clientAuthenticator struct {
 	repository                    repositories.ClientRepository
 	thirdPartyClientAuthenticator ThirdPartyClientAuthenticator
 }
 
-func InstantiateClientAuthenticator(repository repositories.ClientRepository) *ClientAuthenticator {
-	return &ClientAuthenticator{
+func NewClientAuthenticator(repository repositories.ClientRepository) ClientAuthenticator {
+	return &clientAuthenticator{
 		repository: repository,
 	}
 }
 
-func (selfC ClientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
+func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
 
 	if strings.HasPrefix(clientId, "mbb_") {
 		ok, err := selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)

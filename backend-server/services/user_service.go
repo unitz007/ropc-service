@@ -11,15 +11,15 @@ type UserService interface {
 	CreateUser(user *entities.User) (*entities.User, error)
 }
 
-type DefaultUserService struct {
+type userService struct {
 	repository repositories.UserRepository
 }
 
-func NewUserService(repository repositories.UserRepository) *DefaultUserService {
-	return &DefaultUserService{repository: repository}
+func NewUserService(repository repositories.UserRepository) UserService {
+	return &userService{repository: repository}
 }
 
-func (selfC DefaultUserService) CreateUser(user *entities.User) (*entities.User, error) {
+func (selfC userService) CreateUser(user *entities.User) (*entities.User, error) {
 	if user.Username == "" {
 		return nil, errors.New("username is required")
 	}

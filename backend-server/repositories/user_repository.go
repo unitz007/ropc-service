@@ -14,20 +14,20 @@ type UserRepository interface {
 	CreateUser(user *entities.User) (*entities.User, error)
 }
 
-type UserRepositoryImpl struct {
-	db *gorm.DB
+type userRepository struct {
+	db conf.Database[gorm.DB]
 }
 
-func NewUserRepository() *UserRepositoryImpl {
-	return &UserRepositoryImpl{
-		db: conf.DB,
+func NewUserRepository(database conf.Database[gorm.DB]) UserRepository {
+	return &userRepository{
+		db: database,
 	}
 }
 
-func (selfC UserRepositoryImpl) GetUser(username string) (*entities.User, error) {
+func (selfC userRepository) GetUser(username string) (*entities.User, error) {
 	var user *entities.User
 
-	err := selfC.db.Model(&entities.User{}).Where("username = ? OR email = ?", username, username).First(&user).Error
+	err := selfC.db.GetDatabaseConnection().Model(&entities.User{}).Where("username = ? OR email = ?", username, username).First(&user).Error
 	if err != nil {
 		log.Println(err)
 		return nil, errors.New("invalid user credentials")
@@ -36,9 +36,9 @@ func (selfC UserRepositoryImpl) GetUser(username string) (*entities.User, error)
 	return user, nil
 }
 
-func (selfC UserRepositoryImpl) CreateUser(user *entities.User) (*entities.User, error) {
+func (selfC userRepository) CreateUser(user *entities.User) (*entities.User, error) {
 
-	err := selfC.db.Create(user).Error
+	err := selfC.db.GetDatabaseConnection().Create(user).Error
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -47,10 +47,10 @@ func (selfC UserRepositoryImpl) CreateUser(user *entities.User) (*entities.User,
 	return user, nil
 }
 
-func (selfC UserRepositoryImpl) GetUserByUsernameOrEmail(username, email string) (*entities.User, error) {
+func (selfC userRepository) GetUserByUsernameOrEmail(username, email string) (*entities.User, error) {
 	var user entities.User
 
-	err := selfC.db.Where("username = ? OR email = ?", username, email).First(&user).Error
+	err := selfC.db.GetDatabaseConnection().Where("username = ? OR email = ?", username, email).First(&user).Error
 
 	if err != nil {
 		return nil, errors.New("could not execute query")

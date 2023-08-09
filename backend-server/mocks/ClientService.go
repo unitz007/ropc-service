@@ -13,6 +13,11 @@ type ClientService struct {
 	mock.Mock
 }
 
+// CreateClient provides a mock function with given fields: client
+func (_m *ClientService) CreateClient(client *entities.Client) {
+	_m.Called(client)
+}
+
 // GetClients provides a mock function with given fields:
 func (_m *ClientService) GetClients() []entities.Client {
 	ret := _m.Called()

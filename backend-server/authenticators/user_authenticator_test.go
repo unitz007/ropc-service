@@ -16,7 +16,7 @@ func Test_UserAuthenticationFailure(t *testing.T) {
 	t.Run("User does not exist", func(t *testing.T) {
 
 		userRepositoryMock = new(mocks.UserRepository)
-		userAuthenticator := &UserAuthenticator{
+		userAuthenticator := &userAuthenticator{
 			userRepository: userRepositoryMock,
 		}
 
@@ -32,7 +32,7 @@ func Test_UserAuthenticationFailure(t *testing.T) {
 	t.Run("Wrong password", func(t *testing.T) {
 
 		userRepositoryMock = new(mocks.UserRepository)
-		userAuthenticator := &UserAuthenticator{
+		userAuthenticator := &userAuthenticator{
 			userRepository: userRepositoryMock,
 		}
 
@@ -48,7 +48,7 @@ func Test_UserAuthenticationFailure(t *testing.T) {
 	t.Run("Encrypted but wrong password", func(t *testing.T) {
 
 		userRepositoryMock = new(mocks.UserRepository)
-		userAuthenticator := &UserAuthenticator{
+		userAuthenticator := &userAuthenticator{
 			userRepository: userRepositoryMock,
 		}
 
@@ -67,7 +67,7 @@ func Test_UserAuthenticationSuccess(t *testing.T) {
 
 	// successful authentication
 	userRepositoryMock := new(mocks.UserRepository)
-	userAuthenticator := &UserAuthenticator{
+	userAuthenticator := &userAuthenticator{
 		userRepository: userRepositoryMock,
 	}
 	userRepositoryMock.On("GetUser", RightUsername).Return(&entities.User{Username: RightUsername, Password: hashedRightPassword}, nil)

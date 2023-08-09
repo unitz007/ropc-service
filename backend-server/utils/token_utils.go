@@ -17,13 +17,13 @@ func GenerateToken(user *entities.User, client *entities.Client) (string, error)
 	claims["grant_type"] = client.GrantType
 	claims["email"] = user.Email
 
-	return token.SignedString([]byte(conf.GlobalConfig.TokenSecret))
+	return token.SignedString([]byte(conf.EnvironmentConfig.TokenSecret()))
 }
 
 func ValidateToken(token string) (jwt.MapClaims, error) {
 	token = strings.TrimPrefix(token, "Bearer ")
 	tokenClaims, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-		return []byte(conf.GlobalConfig.TokenSecret), nil
+		return []byte(conf.EnvironmentConfig.TokenSecret()), nil
 	})
 
 	if err != nil {

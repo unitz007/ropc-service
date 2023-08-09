@@ -16,6 +16,7 @@ func PanicRecovery(h func(w http.ResponseWriter, r *http.Request)) func(w http.R
 				if e, ok := err.(error); ok {
 					errorMsg = e.Error()
 				}
+				//http.Error(w, errorMsg, http.StatusBadRequest)
 				_ = handlers.PrintResponse(http.StatusBadRequest, w, dto.NewResponse[any](errorMsg, nil))
 			}
 		}()

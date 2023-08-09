@@ -3,36 +3,33 @@ package authenticators
 import (
 	"errors"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 	"ropc-service/model/entities"
 	"ropc-service/repositories"
 )
 
-type UserAuthenticatorContract interface {
+type UserAuthenticator interface {
 	Authenticate(username, password string) (*entities.User, error)
 }
 
-type UserAuthenticator struct {
+type userAuthenticator struct {
 	userRepository repositories.UserRepository
 }
 
-func InstantiateUserAuthenticator(userRepository repositories.UserRepository) *UserAuthenticator {
-	return &UserAuthenticator{
+func NewUserAuthenticator(userRepository repositories.UserRepository) UserAuthenticator {
+	return &userAuthenticator{
 		userRepository: userRepository,
 	}
 }
 
-func (selfC UserAuthenticator) Authenticate(username, password string) (*entities.User, error) {
+func (selfC userAuthenticator) Authenticate(username, password string) (*entities.User, error) {
 
 	user, err := selfC.userRepository.GetUser(username)
 
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
-		log.Println(err)
 		return nil, errors.New("invalid user credentials")
 	}
 

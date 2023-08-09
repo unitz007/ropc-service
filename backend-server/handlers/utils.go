@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -14,6 +15,7 @@ const (
 func JsonToStruct[T any](r io.ReadCloser, t T) error {
 	err := json.NewDecoder(r).Decode(t)
 	if err != nil {
+		log.Println("error = ", err)
 		return errors.New(jsonDecodeError + err.Error())
 	}
 

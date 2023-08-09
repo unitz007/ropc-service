@@ -1,29 +1,51 @@
 package main
 
 import (
-	"net/http"
+	"github.com/gorilla/mux"
 	"ropc-service/conf"
 	"ropc-service/handlers"
 	"ropc-service/middlewares"
+	"ropc-service/repositories"
+	"ropc-service/routers"
+	"ropc-service/services"
+)
+
+const (
+	loginPath  = "/login"
+	userPath   = "/users"
+	clientPath = "/clients"
 )
 
 func main() {
-	environmentConfig := conf.LoadConfig() // load environment configuration
-	conf.InitGormConfig(environmentConfig) // initialize database
+
+	router := routers.NewMuxMultiplexer(mux.NewRouter())
 
 	// set up request handlers
-	requestHandlers := func(mux *http.ServeMux) {
+	requestHandlers := func(router routers.Router) {
+
+		authenticationHandler := handlers.NewAuthenticationHandler(router)
+		userHandler := handlers.NewUserAuthenticatorHandler()
+
+		clientRepository := repositories.NewClientRepository(conf.NewDataBase(conf.EnvironmentConfig))
+
+		clientService := services.NewClientService(clientRepository)
+
+		clientHandler := handlers.NewClientHandler(clientService)
 
 		// authenticate
-		mux.HandleFunc("/login", middlewares.PanicRecovery(handlers.Authentication))
+		router.Post(loginPath, middlewares.PanicRecovery(authenticationHandler.Login))
+		router.Get(loginPath, middlewares.PanicRecovery(authenticationHandler.LoginPage))
 
 		// user
-		mux.HandleFunc("/users", middlewares.PanicRecovery(handlers.CreateUser))
+		router.Post(userPath, middlewares.PanicRecovery(userHandler.CreateUser))
+
+		// client
+		router.Post(clientPath, middlewares.PanicRecovery(clientHandler.CreateClient))
 
 		//secured resource
-		mux.HandleFunc("/user_details", middlewares.PanicRecovery(middlewares.Security(handlers.UserDetailsHandler)))
+		router.Get(userPath, middlewares.PanicRecovery(middlewares.Security(userHandler.GetUserDetails)))
 	}
 
 	// load gin context
-	conf.InitServer(environmentConfig, requestHandlers)
+	conf.InitServer(router, requestHandlers)
 }

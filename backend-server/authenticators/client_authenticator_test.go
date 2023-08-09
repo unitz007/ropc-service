@@ -16,7 +16,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 	t.Run("Client does not exist", func(t *testing.T) {
 
 		clientRepositoryMock = new(mocks.ClientRepository)
-		clientAuthenticator := &ClientAuthenticator{
+		clientAuthenticator := &clientAuthenticator{
 			repository: clientRepositoryMock,
 		}
 		clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
@@ -30,7 +30,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 	t.Run("Client with plain password on Database", func(t *testing.T) {
 
 		clientRepositoryMock = new(mocks.ClientRepository)
-		clientAuthenticator := &ClientAuthenticator{
+		clientAuthenticator := &clientAuthenticator{
 			repository: clientRepositoryMock,
 		}
 
@@ -45,7 +45,7 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 
 	t.Run("Client with wrong secret", func(t *testing.T) {
 		clientRepositoryMock = new(mocks.ClientRepository)
-		clientAuthenticator := &ClientAuthenticator{
+		clientAuthenticator := &clientAuthenticator{
 			repository: clientRepositoryMock,
 		}
 
@@ -63,7 +63,7 @@ func Test_ClientAuthenticationSuccess(t *testing.T) {
 
 	// successful authentication
 	clientRepositoryMock := new(mocks.ClientRepository)
-	clientAuthenticator := &ClientAuthenticator{
+	clientAuthenticator := &clientAuthenticator{
 		repository: clientRepositoryMock,
 	}
 
@@ -88,7 +88,7 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		clientRepositoryMock.On("GetClient", thirdPartyClient).Return(&entities.Client{}, nil)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(&failed, nil)
 
-		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+		clientAuthenticator := clientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
 
 		_, _ = clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
 
@@ -102,7 +102,7 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(&failed, nil)
 
-		clientAuthenticator := ClientAuthenticator{
+		clientAuthenticator := clientAuthenticator{
 			repository:                    clientRepositoryMock,
 			thirdPartyClientAuthenticator: thirdPartyAuthenticatorMock,
 		}
@@ -122,7 +122,7 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(nil, errors.New("request to third party failed"))
 
-		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+		clientAuthenticator := clientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
 
 		_, err := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
 		if err == nil {
@@ -141,7 +141,7 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(&success, nil)
 
-		clientAuthenticator := ClientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
+		clientAuthenticator := clientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
 		client, _ := clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
 
 		if client == nil {

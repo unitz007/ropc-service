@@ -1,73 +1,46 @@
 package repositories
 
 import (
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/stretchr/testify/suite"
+	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
+	"ropc-service/conf"
+	"ropc-service/mocks"
 	"ropc-service/model/entities"
+	"testing"
 )
 
-type Suite struct {
-	suite.Suite
-	DB     *gorm.DB
-	mock   sqlmock.Sqlmock
-	client *entities.Client
-}
+func TestCreateClient(t *testing.T) {
+	var db conf.Database[gorm.DB]
 
-//
-//func Test_clientRepository(t *testing.T) {
-//
-//	s := &Suite{}
-//
-//	var (
-//		db  *sql.DB
-//		err error
-//	)
-//
-//	db, s.mock, err = sqlmock.New()
-//	if err != nil {
-//		t.Errorf("Failed to open mock sql db, error: %v", err)
-//	}
-//
-//	if db == nil {
-//		t.Error("mock db is nil")
-//	}
-//
-//	if s.mock == nil {
-//		t.Error("sqlmock is nil")
-//	}
-//
-//	dialector := mysql.New(mysql.Config{
-//		DriverName: "mysql",
-//		DSN:        "sqlmock_db_0",
-//		Conn:       db,
-//	})
-//
-//	s.DB, err = gorm.Open(dialector, &gorm.Config{})
-//
-//	if err != nil {
-//		t.Errorf("Failed to open gorm db, error: %v", err)
-//	}
-//
-//	if s.DB == nil {
-//		t.Error("gorm db is nil")
-//	}
-//
-//	s.client = &model.Client{
-//		ClientId:     "clientId",
-//		ClientSecret: "clientSecret",
-//	}
-//
-//	defer func(db *sql.DB) {
-//		err := db.Close()
-//		if err != nil {
-//			t.Error("Could not close mock db:", err)
-//		}
-//	}(db)
-//
-//	s.mock.MatchExpectationsInOrder(false)
-//	s.mock.ExpectBegin()
-//
-//	s.mock.ExpectQuery()
-//
-//}
+	t.Run("should return error if client_id already exists", func(t *testing.T) {
+		db = mocks.NewDatabaseMock(t)
+		repo := NewClientRepository(db)
+
+		clientId := "client_id"
+		client := &entities.Client{
+			ClientId:     clientId,
+			ClientSecret: mock.Anything,
+		}
+
+		err := repo.CreateClient(client)
+		require.NoError(t, err, "should not return error")
+
+		err = repo.CreateClient(client)
+		require.Errorf(t, err, "should return error")
+
+		expectedErrorMsg := "client Id already exists"
+
+		if err.Error() != expectedErrorMsg {
+			t.Errorf("expected %s, got %s", expectedErrorMsg, err.Error())
+		}
+	})
+
+	t.Run("should fail if client secret or client id is empty", func(t *testing.T) {
+		db = mocks.NewDatabaseMock(t)
+		repository := NewClientRepository(db)
+		err := repository.CreateClient(&entities.Client{ClientId: "clientId"})
+		require.Errorf(t, err, "should return error cause client secret is empty")
+	})
+
+}

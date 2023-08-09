@@ -13,6 +13,20 @@ type ClientRepository struct {
 	mock.Mock
 }
 
+// CreateClient provides a mock function with given fields: client
+func (_m *ClientRepository) CreateClient(client *entities.Client) error {
+	ret := _m.Called(client)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*entities.Client) error); ok {
+		r0 = rf(client)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // GetClient provides a mock function with given fields: clientId
 func (_m *ClientRepository) GetClient(clientId string) (*entities.Client, error) {
 	ret := _m.Called(clientId)

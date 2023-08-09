@@ -7,23 +7,23 @@ import (
 	"ropc-service/utils"
 )
 
-type AuthenticatorContract interface {
+type Authenticator interface {
 	Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error)
 }
 
-type Authenticator struct {
-	userAuthenticator   authenticators.UserAuthenticatorContract
-	clientAuthenticator authenticators.ClientAuthenticatorContract
+type authenticator struct {
+	userAuthenticator   authenticators.UserAuthenticator
+	clientAuthenticator authenticators.ClientAuthenticator
 }
 
-func InstantiateAuthenticator(uA authenticators.UserAuthenticatorContract, cA authenticators.ClientAuthenticatorContract) *Authenticator {
-	return &Authenticator{
+func InstantiateAuthenticator(uA authenticators.UserAuthenticator, cA authenticators.ClientAuthenticator) *authenticator {
+	return &authenticator{
 		userAuthenticator:   uA,
 		clientAuthenticator: cA,
 	}
 }
 
-func (selfC Authenticator) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
+func (selfC authenticator) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
 
 	u, err := selfC.userAuthenticator.Authenticate(user.Username, user.Password)
 	if err != nil {
