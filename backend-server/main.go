@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"ropc-service/conf"
 	"ropc-service/handlers"
 	"ropc-service/middlewares"
 	"ropc-service/repositories"
 	"ropc-service/routers"
 	"ropc-service/services"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -25,11 +26,11 @@ func main() {
 
 		authenticationHandler := handlers.NewAuthenticationHandler(router)
 		userHandler := handlers.NewUserAuthenticatorHandler()
+		config := conf.EnvironmentConfig
+		db := conf.NewDataBase(config)
 
-		clientRepository := repositories.NewClientRepository(conf.NewDataBase(conf.EnvironmentConfig))
-
+		clientRepository := repositories.NewClientRepository(db)
 		clientService := services.NewClientService(clientRepository)
-
 		clientHandler := handlers.NewClientHandler(clientService)
 
 		// authenticate

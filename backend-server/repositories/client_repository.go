@@ -2,11 +2,11 @@ package repositories
 
 import (
 	"errors"
-	"gorm.io/gorm"
-	"log"
 	"ropc-service/conf"
 	"ropc-service/model/entities"
 	"strings"
+
+	"gorm.io/gorm"
 )
 
 type ClientRepository interface {
@@ -45,8 +45,6 @@ func (c clientRepository) GetClients() []entities.Client {
 }
 
 func (c clientRepository) CreateClient(client *entities.Client) error {
-
-	log.Println(client)
 
 	err := c.db.GetDatabaseConnection().Create(client).Error
 
