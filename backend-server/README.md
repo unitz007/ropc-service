@@ -1,4 +1,5 @@
 # ROPC SERVICE
+[![Go](https://github.com/unitz007/ropc-service/actions/workflows/go.yml/badge.svg)](https://github.com/unitz007/ropc-service/actions/workflows/go.yml)
 
 This is an implementation of Resource Owner Password Credentials using for backend and HTML/CSS/JS for frontend.
 
