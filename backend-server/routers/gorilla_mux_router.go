@@ -1,8 +1,9 @@
 package routers
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type MuxMultiplexer struct {

@@ -2,6 +2,7 @@ package authenticators
 
 import (
 	"errors"
+	"ropc-service/model/entities"
 	"ropc-service/repositories"
 
 	"golang.org/x/crypto/bcrypt"

@@ -47,6 +47,6 @@ func main() {
 		router.Get(userPath, middlewares.PanicRecovery(middlewares.Security(userHandler.GetUserDetails)))
 	}
 
-	// load gin context
 	conf.InitServer(router, requestHandlers)
+
 }
