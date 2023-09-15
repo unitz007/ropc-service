@@ -2,7 +2,7 @@
 
 # ROPC SERVICE (BACKEND) 
 
-This is an implementation of Resource Owner Password Credentials security architecture.
+This is an implementation of Resource Owner Password Credentials.
 
 ## Deployment ##
 1. clone repository: `git clone https://github.com/unitz007/ropc-service.git `
