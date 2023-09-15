@@ -2,17 +2,19 @@ package services
 
 import (
 	"errors"
-	"github.com/stretchr/testify/assert"
 	"ropc-service/mocks"
 	"ropc-service/model/entities"
 	"testing"
+
+	"github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_CreateClientTest(t *testing.T) {
 	t.Run("should panic if create client fails", func(t *testing.T) {
 		clientRepository := new(mocks.ClientRepository)
-		client := &entities.Client{}
-		clientRepository.On("CreateClient", &entities.Client{}).Return(errors.New("could not create client"))
+		client := &entities.Client{ClientId: uuid.NewString()}
+		clientRepository.On("CreateClient", client).Return(errors.New("could not create client"))
 		clientService := NewClientService(clientRepository)
 
 		exec := func() {

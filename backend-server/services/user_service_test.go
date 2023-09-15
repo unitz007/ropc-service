@@ -1,12 +1,13 @@
 package services
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
-	"golang.org/x/crypto/bcrypt"
 	"ropc-service/mocks"
 	model "ropc-service/model/entities"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func TestRegisterUser(t *testing.T) {
