@@ -2,9 +2,9 @@ package authenticators
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
-	"ropc-service/model/entities"
 	"ropc-service/repositories"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserAuthenticator interface {
@@ -29,7 +29,7 @@ func (selfC userAuthenticator) Authenticate(username, password string) (*entitie
 		return nil, err
 	}
 
-	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
+	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil || errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
 		return nil, errors.New("invalid user credentials")
 	}
 

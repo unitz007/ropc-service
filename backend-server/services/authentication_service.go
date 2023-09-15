@@ -16,7 +16,7 @@ type authenticator struct {
 	clientAuthenticator authenticators.ClientAuthenticator
 }
 
-func InstantiateAuthenticator(uA authenticators.UserAuthenticator, cA authenticators.ClientAuthenticator) *authenticator {
+func InstantiateAuthenticator(uA authenticators.UserAuthenticator, cA authenticators.ClientAuthenticator) Authenticator {
 	return &authenticator{
 		userAuthenticator:   uA,
 		clientAuthenticator: cA,
