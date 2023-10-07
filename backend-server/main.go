@@ -1,20 +1,20 @@
 package main
 
 import (
+	"ropc-service/authenticators"
 	"ropc-service/conf"
 	"ropc-service/handlers"
 	"ropc-service/middlewares"
 	"ropc-service/repositories"
 	"ropc-service/routers"
-	"ropc-service/services"
 
 	"github.com/gorilla/mux"
 )
 
 const (
-	loginPath  = "/login"
+	loginPath  = "/token"
 	userPath   = "/users"
-	clientPath = "/clients"
+	clientPath = "/apps"
 )
 
 func main() {
@@ -24,24 +24,32 @@ func main() {
 	// set up request handlers
 	requestHandlers := func(router routers.Router) {
 
-		authenticationHandler := handlers.NewAuthenticationHandler(router)
-		userHandler := handlers.NewUserAuthenticatorHandler()
 		config := conf.EnvironmentConfig
-		db := conf.NewDataBase(config)
+		DB := conf.NewDataBase(config)
 
-		clientRepository := repositories.NewClientRepository(db)
-		clientService := services.NewClientService(clientRepository)
-		clientHandler := handlers.NewClientHandler(clientService)
+		// Repositories
+		clientRepository := repositories.NewClientRepository(DB)
+		//userRepository := repositories.NewUserRepository(DB)
+
+		clientAuthenticator := authenticators.NewClientAuthenticator(clientRepository)
+		//userAuthenticator := authenticators.NewUserAuthenticator(userRepository)
+
+		//authenticator := services.NewAuthenticator(clientAuthenticator)
+
+		authenticationHandler := handlers.NewAuthenticationHandler(router, clientAuthenticator)
+		userHandler := handlers.NewUserAuthenticatorHandler()
+
+		clientHandler := handlers.NewApplicationHandler(clientRepository)
 
 		// authenticate
-		router.Post(loginPath, middlewares.PanicRecovery(authenticationHandler.Login))
+		router.Post(loginPath, middlewares.PanicRecovery(authenticationHandler.Authenticate))
 		router.Get(loginPath, middlewares.PanicRecovery(authenticationHandler.LoginPage))
 
 		// user
-		router.Post(userPath, middlewares.PanicRecovery(userHandler.CreateUser))
+		router.Post(userPath, middlewares.RequestLogger(middlewares.PanicRecovery(userHandler.CreateUser)))
 
 		// client
-		router.Post(clientPath, middlewares.PanicRecovery(clientHandler.CreateClient))
+		router.Post(clientPath, middlewares.PanicRecovery(clientHandler.CreateApplication))
 
 		//secured resource
 		router.Get(userPath, middlewares.PanicRecovery(middlewares.Security(userHandler.GetUserDetails)))

@@ -1,7 +1,8 @@
 package conf
 
 import (
-	"log"
+	"fmt"
+	"ropc-service/logger"
 	"ropc-service/routers"
 	"time"
 )
@@ -15,8 +16,13 @@ func InitServer(router routers.Router, registerHandlers func(router routers.Rout
 
 	go func() {
 		time.Sleep(time.Millisecond * 10)
-		log.Println("Server started on", PORT)
+		msg := fmt.Sprintf("Server started on port %s, with %s", PORT, router.Name())
+		logger.Info(msg)
 	}()
 
-	log.Fatal(router.Serve(":" + PORT))
+	err := router.Serve(":" + PORT)
+
+	if err != nil {
+		logger.Error(err.Error(), true)
+	}
 }

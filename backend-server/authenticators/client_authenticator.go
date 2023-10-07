@@ -2,58 +2,50 @@ package authenticators
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
-	"log"
-	"ropc-service/model/entities"
+	"ropc-service/model"
 	"ropc-service/repositories"
-	"strings"
+	"ropc-service/utils"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 const InvalidClientMessage = "invalid client credentials"
 const ConnectionErrorMessage = "could not authenticate client"
 
 type ClientAuthenticator interface {
-	Authenticate(clientId, clientSecret string) (*entities.Client, error)
+	Authenticate(clientId, clientSecret string) (*model.Token, error)
 }
 
 type clientAuthenticator struct {
-	repository                    repositories.ClientRepository
+	repository                    repositories.ApplicationRepository
 	thirdPartyClientAuthenticator ThirdPartyClientAuthenticator
 }
 
-func NewClientAuthenticator(repository repositories.ClientRepository) ClientAuthenticator {
+func NewClientAuthenticator(repository repositories.ApplicationRepository) ClientAuthenticator {
 	return &clientAuthenticator{
 		repository: repository,
 	}
 }
 
-func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*entities.Client, error) {
+func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*model.Token, error) {
 
-	if strings.HasPrefix(clientId, "mbb_") {
-		ok, err := selfC.thirdPartyClientAuthenticator.Authenticate(clientId, clientSecret)
-
-		if err != nil {
-			return nil, errors.New(ConnectionErrorMessage)
-		}
-
-		if !*ok {
-			return nil, errors.New(InvalidClientMessage)
-
-		}
-
-		return &entities.Client{ClientId: clientId, ClientSecret: clientSecret}, nil
-	}
-
-	client, err := selfC.repository.GetClient(clientId)
+	client, err := selfC.repository.Get(clientId)
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 
-	if err = bcrypt.CompareHashAndPassword([]byte(client.ClientSecret), []byte(clientSecret)); err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
-		log.Println(err)
+	if err = bcrypt.CompareHashAndPassword([]byte(client.ClientSecret), []byte(clientSecret)); err != nil || errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
 		return nil, errors.New(InvalidClientMessage)
 	}
 
-	return client, nil
+	token, err := utils.GenerateToken(client, clientSecret)
+	if err != nil {
+		return nil, err
+	}
+
+	tokenResponse := &model.Token{
+		AccessToken: token,
+	}
+
+	return tokenResponse, nil
 }

@@ -10,6 +10,10 @@ type ChiRouter struct {
 	router *chi.Mux
 }
 
+func (mux *ChiRouter) Name() string {
+	return "Chi Router"
+}
+
 func NewChiRouter(router *chi.Mux) Router {
 	return &ChiRouter{router: router}
 }

@@ -3,14 +3,15 @@ package mocks
 import (
 	"context"
 	"fmt"
+	"log"
+	"ropc-service/model"
+	"testing"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/stretchr/testify/require"
 	mysqltestcontainer "github.com/testcontainers/testcontainers-go/modules/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
-	"ropc-service/model/entities"
-	"testing"
 )
 
 type DatabaseMock struct {
@@ -88,7 +89,7 @@ func NewDatabaseMock(t testing.TB) *DatabaseMock {
 		log.Fatal(err.Error())
 	}
 
-	err = db.AutoMigrate(&entities.Client{}, &entities.User{})
+	err = db.AutoMigrate(&model.Application{}, &model.User{})
 	if err != nil {
 		log.Fatal("Could not migrate:", err.Error())
 	}

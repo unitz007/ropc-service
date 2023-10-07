@@ -3,8 +3,7 @@ package handlers
 import (
 	"net/http"
 	"ropc-service/conf"
-	"ropc-service/model/dto"
-	"ropc-service/model/entities"
+	"ropc-service/model"
 	"ropc-service/repositories"
 	"ropc-service/services"
 	"ropc-service/utils"
@@ -26,7 +25,7 @@ func NewUserAuthenticatorHandler() UserHandler {
 }
 
 func (u *userHandler) CreateUser(response http.ResponseWriter, request *http.Request) {
-	var user *entities.User
+	var user *model.User
 
 	err := JsonToStruct(request.Body, &user)
 	if err != nil {
@@ -43,7 +42,7 @@ func (u *userHandler) CreateUser(response http.ResponseWriter, request *http.Req
 		panic(err)
 
 	}
-	_ = PrintResponse(http.StatusCreated, response, dto.NewResponse[any](userCreated, nil))
+	_ = PrintResponse(http.StatusCreated, response, model.NewResponse[any](userCreated, nil))
 }
 
 func (u *userHandler) GetUserDetails(w http.ResponseWriter, r *http.Request) {
@@ -51,18 +50,18 @@ func (u *userHandler) GetUserDetails(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		accessToken := r.Header.Get("Authorization")
-		claims, err := utils.ValidateToken(accessToken)
+		claims, err := utils.ValidateToken(accessToken, conf.EnvironmentConfig.TokenSecret())
 		if err != nil {
 			panic(err)
 		}
 
-		userDetails := dto.UserDetails{
+		userDetails := model.UserDetails{
 			Username: claims["username"].(string),
 			Email:    claims["email"].(string),
 			ClientId: claims["client_id"].(string),
 		}
 
-		_ = PrintResponse(http.StatusOK, w, dto.NewResponse("User details fetched successfully",
+		_ = PrintResponse(http.StatusOK, w, model.NewResponse("User details fetched successfully",
 			userDetails))
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)

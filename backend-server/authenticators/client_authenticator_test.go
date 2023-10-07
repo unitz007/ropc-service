@@ -2,32 +2,33 @@ package authenticators
 
 import (
 	"errors"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"ropc-service/mocks"
 	"ropc-service/model/entities"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func Test_ClientAuthenticationFailure(t *testing.T) {
 
 	var clientRepositoryMock *mocks.ClientRepository
 
-	t.Run("Client does not exist", func(t *testing.T) {
+	t.Run("Application does not exist", func(t *testing.T) {
 
 		clientRepositoryMock = new(mocks.ClientRepository)
 		clientAuthenticator := &clientAuthenticator{
 			repository: clientRepositoryMock,
 		}
-		clientRepositoryMock.On("GetClient", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
+		clientRepositoryMock.On("Get", mock.Anything).Return(nil, errors.New(InvalidClientMessage))
 		user, err := clientAuthenticator.Authenticate(WrongUsername, mock.Anything)
 		assert.Equal(t, err.Error(), InvalidClientMessage)
 		assert.Nil(t, user)
-		clientRepositoryMock.AssertCalled(t, "GetClient", mock.Anything)
+		clientRepositoryMock.AssertCalled(t, "Get", mock.Anything)
 
 	})
 
-	t.Run("Client with plain password on Database", func(t *testing.T) {
+	t.Run("Application with plain password on Database", func(t *testing.T) {
 
 		clientRepositoryMock = new(mocks.ClientRepository)
 		clientAuthenticator := &clientAuthenticator{
@@ -35,26 +36,26 @@ func Test_ClientAuthenticationFailure(t *testing.T) {
 		}
 
 		// should fail with unencrypted client secret in database
-		clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
+		clientRepositoryMock.On("Get", rightClientId).Return(&entities.Application{ClientId: rightClientId, ClientSecret: rightClientSecret}, nil)
 		user, err := clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
 		assert.EqualError(t, err, InvalidClientMessage)
 		assert.Nil(t, user)
-		clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+		clientRepositoryMock.AssertCalled(t, "Get", rightClientId)
 
 	})
 
-	t.Run("Client with wrong secret", func(t *testing.T) {
+	t.Run("Application with wrong secret", func(t *testing.T) {
 		clientRepositoryMock = new(mocks.ClientRepository)
 		clientAuthenticator := &clientAuthenticator{
 			repository: clientRepositoryMock,
 		}
 
 		// should fail with wrong client secret
-		clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
+		clientRepositoryMock.On("Get", rightClientId).Return(&entities.Application{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 		user, err := clientAuthenticator.Authenticate(rightClientId, WrongClientSecret)
 		assert.EqualError(t, err, InvalidClientMessage)
 		assert.Nil(t, user)
-		clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+		clientRepositoryMock.AssertCalled(t, "Get", rightClientId)
 	})
 
 }
@@ -67,11 +68,11 @@ func Test_ClientAuthenticationSuccess(t *testing.T) {
 		repository: clientRepositoryMock,
 	}
 
-	clientRepositoryMock.On("GetClient", rightClientId).Return(&entities.Client{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
+	clientRepositoryMock.On("Get", rightClientId).Return(&entities.Application{ClientId: rightClientId, ClientSecret: hashedRightClientSecret}, nil)
 	client, err := clientAuthenticator.Authenticate(rightClientId, rightClientSecret)
 	assert.NotNil(t, client)
 	assert.Nil(t, err)
-	clientRepositoryMock.AssertCalled(t, "GetClient", rightClientId)
+	clientRepositoryMock.AssertCalled(t, "Get", rightClientId)
 }
 
 func Test_ThirdPartyValidation(t *testing.T) {
@@ -85,14 +86,14 @@ func Test_ThirdPartyValidation(t *testing.T) {
 		clientRepositoryMock = new(mocks.ClientRepository)
 		thirdPartyAuthenticatorMock = new(mocks.ThirdPartyClientAuthenticator)
 
-		clientRepositoryMock.On("GetClient", thirdPartyClient).Return(&entities.Client{}, nil)
+		clientRepositoryMock.On("Get", thirdPartyClient).Return(&entities.Application{}, nil)
 		thirdPartyAuthenticatorMock.On("Authenticate", thirdPartyClient, mock.Anything).Return(&failed, nil)
 
 		clientAuthenticator := clientAuthenticator{clientRepositoryMock, thirdPartyAuthenticatorMock}
 
 		_, _ = clientAuthenticator.Authenticate(thirdPartyClient, mock.Anything)
 
-		clientRepositoryMock.AssertNotCalled(t, "GetClient", thirdPartyClient)
+		clientRepositoryMock.AssertNotCalled(t, "Get", thirdPartyClient)
 
 		thirdPartyAuthenticatorMock.AssertCalled(t, "Authenticate", thirdPartyClient, mock.Anything)
 

@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 	"ropc-service/handlers"
-	"ropc-service/model/dto"
+	"ropc-service/model"
 )
 
 const (
@@ -15,7 +15,7 @@ func Security(h func(w http.ResponseWriter, r *http.Request)) func(http.Response
 	return func(w http.ResponseWriter, r *http.Request) {
 		accessToken := r.Header.Get(tokenHeader)
 		if accessToken == "" {
-			_ = handlers.PrintResponse(http.StatusForbidden, w, dto.NewResponse[any](tokenHeaderErrorMsg, nil))
+			_ = handlers.PrintResponse(http.StatusForbidden, w, model.NewResponse[any](tokenHeaderErrorMsg, nil))
 		}
 
 		h(w, r)

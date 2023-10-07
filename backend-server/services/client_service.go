@@ -2,36 +2,36 @@ package services
 
 import (
 	"errors"
-	"ropc-service/model/entities"
+	"ropc-service/model"
 	"ropc-service/repositories"
 )
 
-type ClientService interface {
-	GetClients() []entities.Client
-	CreateClient(client *entities.Client)
+type ApplicationService interface {
+	Get() []model.Application
+	CreateClient(client *model.Application)
 }
 
 type clientService struct {
-	clientRepository repositories.ClientRepository
+	clientRepository repositories.ApplicationRepository
 }
 
-func (s *clientService) CreateClient(client *entities.Client) {
+func (s *clientService) CreateClient(client *model.Application) {
 
 	if client.ClientId == "" {
 		panic(errors.New("client id is required"))
 	}
 
-	err := s.clientRepository.CreateClient(client)
+	err := s.clientRepository.Create(client)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-func NewClientService(repository repositories.ClientRepository) ClientService {
+func NewClientService(repository repositories.ApplicationRepository) ApplicationService {
 	return &clientService{clientRepository: repository}
 }
 
-func (s *clientService) GetClients() []entities.Client {
-	return s.clientRepository.GetClients()
+func (s *clientService) Get() []model.Application {
+	return s.clientRepository.GetAll()
 }

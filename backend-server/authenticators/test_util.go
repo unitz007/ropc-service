@@ -1,7 +1,7 @@
 package authenticators
 
 import (
-	"ropc-service/model/entities"
+	"ropc-service/model"
 )
 
 var (
@@ -12,16 +12,6 @@ var (
 	WrongUsername       = "wrong_username"
 	hashedRightPassword = "$2a$12$JadjhGXumDBw.8X9o0.EaeNkIDaeGtmHkAmxfgrqApaFT0t.ZVrm."
 
-	RightTestUser = entities.User{
-		Username: RightUsername,
-		Password: RightPassword,
-	}
-
-	WrongTestUser = entities.User{
-		Username: WrongUsername,
-		Password: WrongPassword,
-	}
-
 	// test client details
 	rightClientId           = "right_clientId"
 	rightClientSecret       = "right_clientSecret"
@@ -29,12 +19,12 @@ var (
 	WrongClientSecret       = "wrong_clientSecret"
 	hashedRightClientSecret = "$2a$12$0TUqBhM9DdBw980nTxz1EuL3eM/jQQSABDVuO6/lrCsjuUCOCFdxy"
 
-	_ = entities.Client{
+	_ = model.Application{
 		ClientId:     rightClientId,
 		ClientSecret: rightClientSecret,
 	}
 
-	WrongClient = entities.Client{
+	WrongClient = model.Application{
 		ClientId:     WrongClientId,
 		ClientSecret: WrongClientSecret,
 	}

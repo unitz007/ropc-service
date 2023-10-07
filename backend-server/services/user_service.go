@@ -2,13 +2,14 @@ package services
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
-	"ropc-service/model/entities"
+	"ropc-service/model"
 	"ropc-service/repositories"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService interface {
-	CreateUser(user *entities.User) (*entities.User, error)
+	CreateUser(user *model.User) (*model.User, error)
 }
 
 type userService struct {
@@ -19,7 +20,7 @@ func NewUserService(repository repositories.UserRepository) UserService {
 	return &userService{repository: repository}
 }
 
-func (selfC userService) CreateUser(user *entities.User) (*entities.User, error) {
+func (selfC userService) CreateUser(user *model.User) (*model.User, error) {
 	if user.Username == "" {
 		return nil, errors.New("username is required")
 	}

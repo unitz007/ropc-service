@@ -2,10 +2,11 @@ package conf
 
 import (
 	"fmt"
+	"ropc-service/logger"
+	"ropc-service/model"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
-	"ropc-service/model/entities"
 )
 
 type Database[T any] interface {
@@ -27,13 +28,15 @@ func NewDataBase(config Config) Database[gorm.DB] {
 
 	db, err := gorm.Open(mysql.Open(DbUrl), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err.Error())
+		logger.Error(err.Error(), true)
 	}
 
-	err = db.AutoMigrate(&entities.User{}, &entities.Client{})
+	err = db.AutoMigrate(&model.User{}, &model.Application{})
 	if err != nil {
-		log.Fatal("Could not migrate:", err.Error())
+		logger.Error("Could not migrate:"+err.Error(), true)
 	}
+
+	logger.Info("Database connection established")
 
 	return &database{db}
 }

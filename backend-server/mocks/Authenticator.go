@@ -3,8 +3,7 @@
 package mocks
 
 import (
-	dto "ropc-service/model/dto"
-	entities "ropc-service/model/entities"
+	model "ropc-service/model"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -14,25 +13,25 @@ type Authenticator struct {
 	mock.Mock
 }
 
-// Authenticate provides a mock function with given fields: user, client
-func (_m *Authenticator) Authenticate(user *entities.User, client *entities.Client) (*dto.Token, error) {
-	ret := _m.Called(user, client)
+// Authenticate provides a mock function with given fields: client
+func (_m *Authenticator) Authenticate(client *model.Application) (*model.Token, error) {
+	ret := _m.Called(client)
 
-	var r0 *dto.Token
+	var r0 *model.Token
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*entities.User, *entities.Client) (*dto.Token, error)); ok {
-		return rf(user, client)
+	if rf, ok := ret.Get(0).(func(*model.Application) (*model.Token, error)); ok {
+		return rf(client)
 	}
-	if rf, ok := ret.Get(0).(func(*entities.User, *entities.Client) *dto.Token); ok {
-		r0 = rf(user, client)
+	if rf, ok := ret.Get(0).(func(*model.Application) *model.Token); ok {
+		r0 = rf(client)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*dto.Token)
+			r0 = ret.Get(0).(*model.Token)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*entities.User, *entities.Client) error); ok {
-		r1 = rf(user, client)
+	if rf, ok := ret.Get(1).(func(*model.Application) error); ok {
+		r1 = rf(client)
 	} else {
 		r1 = ret.Error(1)
 	}

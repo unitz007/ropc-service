@@ -2,14 +2,14 @@ package authenticators
 
 import (
 	"errors"
-	"ropc-service/model/entities"
+	"ropc-service/model"
 	"ropc-service/repositories"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type UserAuthenticator interface {
-	Authenticate(username, password string) (*entities.User, error)
+	Authenticate(username, password string) (*model.User, error)
 }
 
 type userAuthenticator struct {
@@ -22,7 +22,7 @@ func NewUserAuthenticator(userRepository repositories.UserRepository) UserAuthen
 	}
 }
 
-func (selfC userAuthenticator) Authenticate(username, password string) (*entities.User, error) {
+func (selfC userAuthenticator) Authenticate(username, password string) (*model.User, error) {
 
 	user, err := selfC.userRepository.GetUser(username)
 

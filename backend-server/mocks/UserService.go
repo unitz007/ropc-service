@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	entities "ropc-service/model/entities"
+	model "ropc-service/model"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -14,23 +14,23 @@ type UserService struct {
 }
 
 // CreateUser provides a mock function with given fields: user
-func (_m *UserService) CreateUser(user *entities.User) (*entities.User, error) {
+func (_m *UserService) CreateUser(user *model.User) (*model.User, error) {
 	ret := _m.Called(user)
 
-	var r0 *entities.User
+	var r0 *model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*entities.User) (*entities.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(*model.User) (*model.User, error)); ok {
 		return rf(user)
 	}
-	if rf, ok := ret.Get(0).(func(*entities.User) *entities.User); ok {
+	if rf, ok := ret.Get(0).(func(*model.User) *model.User); ok {
 		r0 = rf(user)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*entities.User)
+			r0 = ret.Get(0).(*model.User)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*entities.User) error); ok {
+	if rf, ok := ret.Get(1).(func(*model.User) error); ok {
 		r1 = rf(user)
 	} else {
 		r1 = ret.Error(1)

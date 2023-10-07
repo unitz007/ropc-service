@@ -14,6 +14,11 @@ type AuthenticationHandler struct {
 	mock.Mock
 }
 
+// Authenticate provides a mock function with given fields: w, r
+func (_m *AuthenticationHandler) Authenticate(w http.ResponseWriter, r *http.Request) {
+	_m.Called(w, r)
+}
+
 // GetMux provides a mock function with given fields:
 func (_m *AuthenticationHandler) GetMux() *mux.Router {
 	ret := _m.Called()
@@ -28,11 +33,6 @@ func (_m *AuthenticationHandler) GetMux() *mux.Router {
 	}
 
 	return r0
-}
-
-// Login provides a mock function with given fields: w, r
-func (_m *AuthenticationHandler) Login(w http.ResponseWriter, r *http.Request) {
-	_m.Called(w, r)
 }
 
 // LoginPage provides a mock function with given fields: w, r

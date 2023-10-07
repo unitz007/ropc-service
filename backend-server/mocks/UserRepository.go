@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	entities "ropc-service/model/entities"
+	model "ropc-service/model"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -14,23 +14,23 @@ type UserRepository struct {
 }
 
 // CreateUser provides a mock function with given fields: user
-func (_m *UserRepository) CreateUser(user *entities.User) (*entities.User, error) {
+func (_m *UserRepository) CreateUser(user *model.User) (*model.User, error) {
 	ret := _m.Called(user)
 
-	var r0 *entities.User
+	var r0 *model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*entities.User) (*entities.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(*model.User) (*model.User, error)); ok {
 		return rf(user)
 	}
-	if rf, ok := ret.Get(0).(func(*entities.User) *entities.User); ok {
+	if rf, ok := ret.Get(0).(func(*model.User) *model.User); ok {
 		r0 = rf(user)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*entities.User)
+			r0 = ret.Get(0).(*model.User)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*entities.User) error); ok {
+	if rf, ok := ret.Get(1).(func(*model.User) error); ok {
 		r1 = rf(user)
 	} else {
 		r1 = ret.Error(1)
@@ -40,19 +40,19 @@ func (_m *UserRepository) CreateUser(user *entities.User) (*entities.User, error
 }
 
 // GetUser provides a mock function with given fields: usernameOrEmail
-func (_m *UserRepository) GetUser(usernameOrEmail string) (*entities.User, error) {
+func (_m *UserRepository) GetUser(usernameOrEmail string) (*model.User, error) {
 	ret := _m.Called(usernameOrEmail)
 
-	var r0 *entities.User
+	var r0 *model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string) (*entities.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(string) (*model.User, error)); ok {
 		return rf(usernameOrEmail)
 	}
-	if rf, ok := ret.Get(0).(func(string) *entities.User); ok {
+	if rf, ok := ret.Get(0).(func(string) *model.User); ok {
 		r0 = rf(usernameOrEmail)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*entities.User)
+			r0 = ret.Get(0).(*model.User)
 		}
 	}
 
@@ -66,19 +66,19 @@ func (_m *UserRepository) GetUser(usernameOrEmail string) (*entities.User, error
 }
 
 // GetUserByUsernameOrEmail provides a mock function with given fields: username, email
-func (_m *UserRepository) GetUserByUsernameOrEmail(username string, email string) (*entities.User, error) {
+func (_m *UserRepository) GetUserByUsernameOrEmail(username string, email string) (*model.User, error) {
 	ret := _m.Called(username, email)
 
-	var r0 *entities.User
+	var r0 *model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string, string) (*entities.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(string, string) (*model.User, error)); ok {
 		return rf(username, email)
 	}
-	if rf, ok := ret.Get(0).(func(string, string) *entities.User); ok {
+	if rf, ok := ret.Get(0).(func(string, string) *model.User); ok {
 		r0 = rf(username, email)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*entities.User)
+			r0 = ret.Get(0).(*model.User)
 		}
 	}
 

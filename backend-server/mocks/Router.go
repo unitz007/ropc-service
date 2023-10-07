@@ -18,6 +18,20 @@ func (_m *Router) Get(path string, handlerFunc func(http.ResponseWriter, *http.R
 	_m.Called(path, handlerFunc)
 }
 
+// Name provides a mock function with given fields:
+func (_m *Router) Name() string {
+	ret := _m.Called()
+
+	var r0 string
+	if rf, ok := ret.Get(0).(func() string); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	return r0
+}
+
 // Post provides a mock function with given fields: path, handler
 func (_m *Router) Post(path string, handler func(http.ResponseWriter, *http.Request)) {
 	_m.Called(path, handler)

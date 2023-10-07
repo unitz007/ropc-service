@@ -1,10 +1,13 @@
 package conf
 
 import (
-	"github.com/joho/godotenv"
+	"fmt"
 	"log"
 	"os"
+	"ropc-service/logger"
 	"strconv"
+
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -40,9 +43,13 @@ type config struct{}
 
 func NewConfig() Config {
 	// load .env file
-	err := godotenv.Load(".env")
+	err := godotenv.Load(configFileName)
+
+	dir, err := os.Getwd()
+	fmt.Println(dir)
+
 	if err != nil {
-		log.Println("Could not load .env file")
+		logger.Warn("Could not load .env file")
 	}
 
 	return &config{}
