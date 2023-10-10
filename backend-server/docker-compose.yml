@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=dbPassword
       - MYSQL_DATABASE=ropc
   backend:
-    image: "ropc-service"
+    image: "backend-server"
     restart: on-failure
     environment:
       - DB_PORT=3300

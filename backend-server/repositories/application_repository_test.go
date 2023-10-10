@@ -1,9 +1,9 @@
 package repositories
 
 import (
-	"ropc-service/conf"
-	"ropc-service/mocks"
-	"ropc-service/model/entities"
+	"backend-server/conf"
+	"backend-server/mocks"
+	"backend-server/model/entities"
 	"testing"
 
 	"github.com/stretchr/testify/mock"
@@ -17,7 +17,7 @@ func TestCreateClient(t *testing.T) {
 
 	t.Run("should return error if client_id already exists", func(t *testing.T) {
 		db = mocks.NewDatabaseMock(t)
-		repo := NewClientRepository(db)
+		repo := NewApplicationRepository(db)
 
 		clientId := "client_id"
 		client := &entities.Application{
@@ -40,7 +40,7 @@ func TestCreateClient(t *testing.T) {
 
 	t.Run("should fail if client secret or client id is empty", func(t *testing.T) {
 		db = mocks.NewDatabaseMock(t)
-		repository := NewClientRepository(db)
+		repository := NewApplicationRepository(db)
 		err := repository.Create(&entities.Application{ClientId: "clientId"})
 		require.Errorf(t, err, "should return error cause client secret is empty")
 	})

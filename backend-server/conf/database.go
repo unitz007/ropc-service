@@ -1,9 +1,9 @@
 package conf
 
 import (
+	"backend-server/logger"
+	"backend-server/model"
 	"fmt"
-	"ropc-service/logger"
-	"ropc-service/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

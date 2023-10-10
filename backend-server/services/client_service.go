@@ -1,9 +1,9 @@
 package services
 
 import (
+	"backend-server/model"
+	"backend-server/repositories"
 	"errors"
-	"ropc-service/model"
-	"ropc-service/repositories"
 )
 
 type ApplicationService interface {

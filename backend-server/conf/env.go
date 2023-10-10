@@ -1,10 +1,10 @@
 package conf
 
 import (
+	"backend-server/logger"
 	"fmt"
 	"log"
 	"os"
-	"ropc-service/logger"
 	"strconv"
 
 	"github.com/joho/godotenv"

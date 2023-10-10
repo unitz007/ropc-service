@@ -1,9 +1,9 @@
 package authenticators
 
 import (
+	"backend-server/mocks"
+	"backend-server/model/entities"
 	"errors"
-	"ropc-service/mocks"
-	"ropc-service/model/entities"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

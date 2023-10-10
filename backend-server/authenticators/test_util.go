@@ -1,7 +1,7 @@
 package authenticators
 
 import (
-	"ropc-service/model"
+	"backend-server/model"
 )
 
 var (

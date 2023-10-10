@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"backend-server/conf"
+	"backend-server/model"
+	"backend-server/repositories"
+	"backend-server/services"
+	"backend-server/utils"
 	"net/http"
-	"ropc-service/conf"
-	"ropc-service/model"
-	"ropc-service/repositories"
-	"ropc-service/services"
-	"ropc-service/utils"
 )
 
 const (

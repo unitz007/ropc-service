@@ -1,8 +1,8 @@
 package services
 
 import (
-	"ropc-service/mocks"
-	model "ropc-service/model/entities"
+	"backend-server/mocks"
+	model "backend-server/model/entities"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

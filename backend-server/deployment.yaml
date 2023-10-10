@@ -17,8 +17,8 @@ spec:
         app: ropc-backend
     spec:
       containers:
-        - name: ropc-service-container
-          image: unitz007/ropc-service:latest
+        - name: backend-server-container
+          image: unitz007/backend-server:latest
           ports:
             - containerPort: 3000
           env:

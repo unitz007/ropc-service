@@ -1,10 +1,10 @@
 package authenticators
 
 import (
+	"backend-server/model"
+	"backend-server/repositories"
+	"backend-server/utils"
 	"errors"
-	"ropc-service/model"
-	"ropc-service/repositories"
-	"ropc-service/utils"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -12,7 +12,7 @@ import (
 const InvalidClientMessage = "invalid client credentials"
 const ConnectionErrorMessage = "could not authenticate client"
 
-type ClientAuthenticator interface {
+type Authenticator interface {
 	Authenticate(clientId, clientSecret string) (*model.Token, error)
 }
 
@@ -21,7 +21,7 @@ type clientAuthenticator struct {
 	thirdPartyClientAuthenticator ThirdPartyClientAuthenticator
 }
 
-func NewClientAuthenticator(repository repositories.ApplicationRepository) ClientAuthenticator {
+func NewClientAuthenticator(repository repositories.ApplicationRepository) Authenticator {
 	return &clientAuthenticator{
 		repository: repository,
 	}
@@ -30,6 +30,7 @@ func NewClientAuthenticator(repository repositories.ApplicationRepository) Clien
 func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*model.Token, error) {
 
 	client, err := selfC.repository.Get(clientId)
+
 	if err != nil {
 		return nil, err
 	}

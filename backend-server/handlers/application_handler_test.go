@@ -1,11 +1,11 @@
 package handlers
 
 import (
+	"backend-server/mocks"
+	"backend-server/model"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"ropc-service/mocks"
-	"ropc-service/model"
 	"strings"
 	"testing"
 
@@ -84,3 +84,17 @@ func TestCreateClientHandler(t *testing.T) {
 
 	})
 }
+
+//func TestGenerateClientSecret(t *testing.T) {
+//	t.Run("should contain client id as path variable", func(t *testing.T) {
+//		urlWithoutClientId := "http://localhost:8080/apps"
+//
+//		request := httptest.NewRequest(http.MethodPost, urlWithoutClientId, w.Body)
+//		response := httptest.NewRecorder()
+//
+//		repoMock := new(mocks.ApplicationRepository)
+//
+//		handler := NewApplicationHandler(a)
+//
+//	})
+//}

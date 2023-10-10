@@ -1,60 +1,44 @@
 package main
 
 import (
-	"ropc-service/authenticators"
-	"ropc-service/conf"
-	"ropc-service/handlers"
-	"ropc-service/middlewares"
-	"ropc-service/repositories"
-	"ropc-service/routers"
+	"backend-server/conf"
+	"backend-server/handlers"
+	"backend-server/repositories"
+	"backend-server/routers"
+	"backend-server/services"
+	"log"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
 const (
-	loginPath  = "/token"
-	userPath   = "/users"
-	clientPath = "/apps"
+	loginPath = "/token"
+	appPath   = "/apps"
 )
 
 func main() {
 
-	router := routers.NewMuxMultiplexer(mux.NewRouter())
+	// properties
+	mul := mux.NewRouter()
+	router := routers.NewRouter(mul)
+	config := conf.NewConfig()
+	DB := conf.NewDataBase(config)
 
-	// set up request handlers
-	requestHandlers := func(router routers.Router) {
+	// Repositories
+	applicationRepository := repositories.NewApplicationRepository(DB)
 
-		config := conf.EnvironmentConfig
-		DB := conf.NewDataBase(config)
+	// services
+	authenticatorService := services.NewAuthenticatorService(applicationRepository)
 
-		// Repositories
-		clientRepository := repositories.NewClientRepository(DB)
-		//userRepository := repositories.NewUserRepository(DB)
+	// Handlers
+	authenticationHandler := handlers.NewAuthenticationHandler(authenticatorService)
+	applicationHandler := handlers.NewApplicationHandler(applicationRepository)
 
-		clientAuthenticator := authenticators.NewClientAuthenticator(clientRepository)
-		//userAuthenticator := authenticators.NewUserAuthenticator(userRepository)
+	// Server
+	server := NewServer(router)
+	server.RegisterHandler(appPath, http.MethodPost, applicationHandler.CreateApplication)
+	server.RegisterHandler(loginPath, http.MethodPost, authenticationHandler.Authenticate)
 
-		//authenticator := services.NewAuthenticator(clientAuthenticator)
-
-		authenticationHandler := handlers.NewAuthenticationHandler(router, clientAuthenticator)
-		userHandler := handlers.NewUserAuthenticatorHandler()
-
-		clientHandler := handlers.NewApplicationHandler(clientRepository)
-
-		// authenticate
-		router.Post(loginPath, middlewares.PanicRecovery(authenticationHandler.Authenticate))
-		router.Get(loginPath, middlewares.PanicRecovery(authenticationHandler.LoginPage))
-
-		// user
-		router.Post(userPath, middlewares.RequestLogger(middlewares.PanicRecovery(userHandler.CreateUser)))
-
-		// client
-		router.Post(clientPath, middlewares.PanicRecovery(clientHandler.CreateApplication))
-
-		//secured resource
-		router.Get(userPath, middlewares.PanicRecovery(middlewares.Security(userHandler.GetUserDetails)))
-	}
-
-	conf.InitServer(router, requestHandlers)
-
+	log.Fatal(server.Start(":" + config.ServerPort()))
 }

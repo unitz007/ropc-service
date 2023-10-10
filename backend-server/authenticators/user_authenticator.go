@@ -1,9 +1,9 @@
 package authenticators
 
 import (
+	"backend-server/model"
+	"backend-server/repositories"
 	"errors"
-	"ropc-service/model"
-	"ropc-service/repositories"
 
 	"golang.org/x/crypto/bcrypt"
 )

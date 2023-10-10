@@ -1,31 +1,27 @@
 package handlers
 
 import (
+	"backend-server/model"
+	"backend-server/repositories"
 	"errors"
 	"net/http"
-	"ropc-service/model"
-	"ropc-service/repositories"
-	"ropc-service/routers"
-
-	"github.com/gorilla/mux"
 )
 
 type ApplicationHandler interface {
 	CreateApplication(w http.ResponseWriter, r *http.Request)
 }
 
-type applicationHandler[T any] struct {
-	router                routers.Router
+type applicationHandler struct {
 	applicationRepository repositories.ApplicationRepository
 }
 
 func NewApplicationHandler(applicationRepository repositories.ApplicationRepository) ApplicationHandler {
-	return &applicationHandler[*mux.Route]{
+	return &applicationHandler{
 		applicationRepository: applicationRepository,
 	}
 }
 
-func (c *applicationHandler[T]) CreateApplication(w http.ResponseWriter, r *http.Request) {
+func (c *applicationHandler) CreateApplication(w http.ResponseWriter, r *http.Request) {
 
 	var request *model.CreateApplication
 
@@ -34,7 +30,7 @@ func (c *applicationHandler[T]) CreateApplication(w http.ResponseWriter, r *http
 		panic(errors.New("invalid prepareRequest body"))
 	}
 
-	app, err := model.NewApplication(request.ClientId, request.ClientSecret)
+	app, err := model.NewApplication(request.ClientId)
 	if err != nil {
 		panic(err)
 	}

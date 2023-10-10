@@ -7,20 +7,24 @@ import (
 )
 
 type Application struct {
-	gorm.Model   `json:"-"`
+	gorm.Model
 	ClientId     string `gorm:"index;unique;not-null"`
-	ClientSecret string `gorm:"not-null;size:100" json:"-"`
+	ClientSecret string `gorm:"size:100"`
+	Name         string `gorm:"unique"`
+	RedirectUri  string `gorm:""`
 }
 
-func NewApplication(clientId, clientSecret string) (*Application, error) {
+func NewApplication(clientId string) (*Application, error) {
 
 	if clientId == "" {
 		return nil, errors.New("client id should not be empty")
 	}
 
+	//hashed, _ := bcrypt.GenerateFromPassword([]byte(clientSecret), 0)
+
 	app := &Application{
-		ClientId:     clientId,
-		ClientSecret: clientSecret,
+		ClientId: clientId,
+		//ClientSecret: string(hashed),
 	}
 
 	return app, nil

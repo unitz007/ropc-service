@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"ropc-service/model"
+	"backend-server/model"
 	"strings"
 
 	"github.com/golang-jwt/jwt"

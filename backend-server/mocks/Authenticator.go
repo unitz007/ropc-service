@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	model "ropc-service/model"
+	model "backend-server/model"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -13,25 +13,25 @@ type Authenticator struct {
 	mock.Mock
 }
 
-// Authenticate provides a mock function with given fields: client
-func (_m *Authenticator) Authenticate(client *model.Application) (*model.Token, error) {
-	ret := _m.Called(client)
+// Authenticate provides a mock function with given fields: clientId, clientSecret
+func (_m *Authenticator) Authenticate(clientId string, clientSecret string) (*model.Token, error) {
+	ret := _m.Called(clientId, clientSecret)
 
 	var r0 *model.Token
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*model.Application) (*model.Token, error)); ok {
-		return rf(client)
+	if rf, ok := ret.Get(0).(func(string, string) (*model.Token, error)); ok {
+		return rf(clientId, clientSecret)
 	}
-	if rf, ok := ret.Get(0).(func(*model.Application) *model.Token); ok {
-		r0 = rf(client)
+	if rf, ok := ret.Get(0).(func(string, string) *model.Token); ok {
+		r0 = rf(clientId, clientSecret)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.Token)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*model.Application) error); ok {
-		r1 = rf(client)
+	if rf, ok := ret.Get(1).(func(string, string) error); ok {
+		r1 = rf(clientId, clientSecret)
 	} else {
 		r1 = ret.Error(1)
 	}

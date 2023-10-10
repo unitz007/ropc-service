@@ -1,11 +1,10 @@
 package handlers
 
 import (
+	"backend-server/model"
+	"backend-server/services"
 	"errors"
 	"net/http"
-	"ropc-service/authenticators"
-	"ropc-service/model"
-	"ropc-service/routers"
 
 	"github.com/gorilla/mux"
 )
@@ -13,21 +12,19 @@ import (
 const authenticationSuccessMsg = "Authentication successful"
 
 type AuthenticationHandler interface {
-	GetMux() *mux.Router
 	Authenticate(w http.ResponseWriter, r *http.Request)
 	LoginPage(w http.ResponseWriter, r *http.Request)
 }
 
-type authenticationHandler[T any] struct {
-	router        routers.Router
-	authenticator authenticators.ClientAuthenticator
+type authenticationHandler struct {
+	authenticator services.AuthenticatorService
 }
 
-func NewAuthenticationHandler(router routers.Router, authenticator authenticators.ClientAuthenticator) AuthenticationHandler {
-	return &authenticationHandler[*mux.Router]{router, authenticator}
+func NewAuthenticationHandler(authenticator services.AuthenticatorService) AuthenticationHandler {
+	return &authenticationHandler{authenticator}
 }
 
-func (a *authenticationHandler[T]) Authenticate(w http.ResponseWriter, r *http.Request) {
+func (a *authenticationHandler) Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 		panic(errors.New("invalid content-type"))
@@ -48,7 +45,7 @@ func (a *authenticationHandler[T]) Authenticate(w http.ResponseWriter, r *http.R
 		panic(errors.New("grant type is required"))
 	}
 
-	token, err := a.authenticator.Authenticate(clientId, clientSecret)
+	token, err := a.authenticator.ClientCredentials(clientId, clientSecret)
 	if err != nil {
 		_ = PrintResponse(http.StatusUnauthorized, w, &model.Response[string]{Message: err.Error()})
 		return
@@ -57,10 +54,10 @@ func (a *authenticationHandler[T]) Authenticate(w http.ResponseWriter, r *http.R
 	_ = PrintResponse[any](http.StatusOK, w, token)
 }
 
-func (a *authenticationHandler[T]) LoginPage(w http.ResponseWriter, r *http.Request) {
+func (a *authenticationHandler) LoginPage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./assets/html/login.html")
 }
 
-func (a *authenticationHandler[T]) GetMux() *mux.Router {
+func (a *authenticationHandler) GetMux() *mux.Router {
 	return &mux.Router{}
 }

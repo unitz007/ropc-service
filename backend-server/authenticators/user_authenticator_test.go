@@ -1,12 +1,13 @@
 package authenticators
 
 import (
+	"backend-server/mocks"
+	"backend-server/model/entities"
 	"errors"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"ropc-service/mocks"
-	"ropc-service/model/entities"
-	"testing"
 )
 
 func Test_UserAuthenticationFailure(t *testing.T) {

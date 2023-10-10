@@ -1,10 +1,10 @@
 package repositories
 
 import (
+	"backend-server/conf"
+	"backend-server/model"
 	"errors"
 	"log"
-	"ropc-service/conf"
-	"ropc-service/model"
 
 	"gorm.io/gorm"
 )

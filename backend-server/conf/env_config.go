@@ -1,8 +1,8 @@
 package conf
 
 import (
+	"backend-server/logger"
 	"os"
-	"ropc-service/logger"
 	"strconv"
 )
 

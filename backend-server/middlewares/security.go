@@ -1,9 +1,9 @@
 package middlewares
 
 import (
+	"backend-server/handlers"
+	"backend-server/model"
 	"net/http"
-	"ropc-service/handlers"
-	"ropc-service/model"
 )
 
 const (

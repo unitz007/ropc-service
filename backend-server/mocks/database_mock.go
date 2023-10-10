@@ -1,10 +1,10 @@
 package mocks
 
 import (
+	"backend-server/model"
 	"context"
 	"fmt"
 	"log"
-	"ropc-service/model"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"

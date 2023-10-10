@@ -1,10 +1,10 @@
 package services
 
 import (
+	"backend-server/authenticators"
+	"backend-server/mocks"
+	"backend-server/model/entities"
 	"errors"
-	"ropc-service/authenticators"
-	"ropc-service/mocks"
-	"ropc-service/model/entities"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

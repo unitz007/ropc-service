@@ -1,9 +1,9 @@
 package repositories
 
 import (
+	"backend-server/conf"
+	"backend-server/model"
 	"errors"
-	"ropc-service/conf"
-	"ropc-service/model"
 	"strings"
 
 	"gorm.io/gorm"
@@ -19,7 +19,7 @@ type applicationRepository struct {
 	db conf.Database[gorm.DB]
 }
 
-func NewClientRepository(db conf.Database[gorm.DB]) ApplicationRepository {
+func NewApplicationRepository(db conf.Database[gorm.DB]) ApplicationRepository {
 	return &applicationRepository{db: db}
 }
 
@@ -32,7 +32,7 @@ func (c applicationRepository) Get(clientId string) (*model.Application, error) 
 		Where("client_id = ?", clientId).
 		First(&client).
 		Error
-	
+
 	if err != nil {
 		return nil, errors.New("application not found")
 	}

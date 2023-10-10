@@ -1,7 +1,9 @@
 package authenticators
 
+import "backend-server/model"
+
 type Oauth2 interface {
-	Authenticate(grantType string)
+	ClientCredentials(clientId, clientSecret string) (*model.Token, error)
 }
 
 type GrantType interface {
