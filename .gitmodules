@@ -1,11 +1,8 @@
 [submodule "frontend-server"]
-	path = frontend-server
+	path = ropc-backend
 	url = git@github.com:unitz007/ropc-frontend.git
 	branch=main
-[submodule "backend-server"]
-	path = backend-server
-	url = git@github.com:unitz007/ropc-backend.git
+[submodule "frontend-server"]
+	path = ropc-frontend
+	url = git@github.com:unitz007/ropc-frontend.git
 	branch=main
-[submodule "ropc-backend"]
-	path = ropc-backend
-	url = git@github.com:unitz007/ropc-backend.git
