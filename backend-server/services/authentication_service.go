@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	InvalidClientMessage   = "invalid client credentials"
+	InvalidClientMessage   = "invalid credentials"
 	ConnectionErrorMessage = "could not authenticate client"
 )
 
@@ -23,7 +23,7 @@ type authenticatorService struct {
 }
 
 func (a *authenticatorService) ClientCredentials(clientId, clientSecret string) (*model.Token, error) {
-	app, err := a.applicationRepository.Get(clientId)
+	app, err := a.applicationRepository.GetByClientId(clientId)
 	if err != nil {
 		return nil, err
 	}
@@ -32,16 +32,12 @@ func (a *authenticatorService) ClientCredentials(clientId, clientSecret string) 
 		return nil, errors.New(InvalidClientMessage)
 	}
 
-	token, err := utils.GenerateToken(app, clientSecret)
+	tokenResponse, err := utils.GenerateToken(app, clientSecret)
 	if err != nil {
 		return nil, err
 	}
 
-	tokenResponse := &model.Token{
-		AccessToken: token,
-	}
-
-	return tokenResponse, nil
+	return &model.Token{AccessToken: tokenResponse}, nil
 }
 
 func NewAuthenticatorService(applicationRepository repositories.ApplicationRepository) AuthenticatorService {

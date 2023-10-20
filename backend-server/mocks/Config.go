@@ -79,6 +79,20 @@ func (_m *Config) DatabaseUser() string {
 	return r0
 }
 
+// Mux provides a mock function with given fields:
+func (_m *Config) Mux() string {
+	ret := _m.Called()
+
+	var r0 string
+	if rf, ok := ret.Get(0).(func() string); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	return r0
+}
+
 // ServerPort provides a mock function with given fields:
 func (_m *Config) ServerPort() string {
 	ret := _m.Called()

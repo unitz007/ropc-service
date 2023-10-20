@@ -2,7 +2,6 @@ package conf
 
 import (
 	"backend-server/logger"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -37,17 +36,18 @@ type Config interface {
 	DatabaseHost() string
 	DatabasePort() string
 	TokenExpiry() int
+	Mux() string
 }
 
 type config struct{}
 
+func (c *config) Mux() string {
+	return getEnvironmentVariable("ROPC_MUX")
+}
+
 func NewConfig() Config {
 	// load .env file
 	err := godotenv.Load(configFileName)
-
-	dir, err := os.Getwd()
-	fmt.Println(dir)
-
 	if err != nil {
 		logger.Warn("Could not load .env file")
 	}

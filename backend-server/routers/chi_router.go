@@ -10,6 +10,14 @@ type ChiRouter struct {
 	router *chi.Mux
 }
 
+func (mux *ChiRouter) Delete(path string, handler func(http.ResponseWriter, *http.Request)) {
+	mux.router.Delete(path, handler)
+}
+
+func (mux *ChiRouter) Put(path string, handler func(http.ResponseWriter, *http.Request)) {
+	mux.router.Put(path, handler)
+}
+
 func (mux *ChiRouter) Name() string {
 	return "Chi Router"
 }

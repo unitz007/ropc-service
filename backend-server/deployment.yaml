@@ -17,7 +17,7 @@ spec:
         app: ropc-backend
     spec:
       containers:
-        - name: backend-server-container
+        - name: ropc-container
           image: unitz007/backend-server:latest
           ports:
             - containerPort: 3000
@@ -46,7 +46,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ropc-db
-  namespace: development
+  namespace: test
   labels:
     app: ropc-db
 spec:
@@ -68,4 +68,4 @@ spec:
             - name: MARIADB_ROOT_PASSWORD
               value: dbPassword
             - name: MARIADB_DATABASE
-              value: ropc
+              value: ropc_db

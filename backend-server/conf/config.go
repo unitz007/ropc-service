@@ -5,6 +5,6 @@ var EnvironmentConfig Config
 //var DatabaseConnect Database[gorm.DB]
 
 func init() {
-	EnvironmentConfig = NewConfig()
+	EnvironmentConfig = NewEnvConfig()
 	//DatabaseConnect = NewDataBase(EnvironmentConfig)
 }

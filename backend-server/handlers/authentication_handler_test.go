@@ -65,13 +65,25 @@ func Test_FieldValidations(t *testing.T) {
 
 		authenticator.AssertNotCalled(t, "Authenticate", mock.Anything, mock.Anything)
 	})
+
+	t.Run("should panic with invalid grant type", func(t *testing.T) {
+		authenticator := new(mocks.AuthenticatorService)
+		handler := NewAuthenticationHandler(authenticator)
+		req := prepareRequest("clientId", "clientSecret", "invalid_grant_type")
+		w := httptest.NewRecorder()
+		assert.PanicsWithError(t, "invalid grant type", func() {
+			handler.Authenticate(w, req)
+		})
+
+		authenticator.AssertNotCalled(t, "Authenticate", mock.Anything, mock.Anything)
+	})
 }
 
 func TestAuthenticationHandler_Authenticate(t *testing.T) {
 
 	clientId := "clientId"
 	clientSecret := "clientSecret"
-	grantType := "grantType"
+	grantType := "client_credentials"
 
 	req := prepareRequest(clientId, clientSecret, grantType)
 

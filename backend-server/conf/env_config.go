@@ -8,6 +8,10 @@ import (
 
 type envConfig struct{}
 
+func (e envConfig) Mux() string {
+	return getEnvironmentVariable("ROPC_MUX")
+}
+
 func (e envConfig) ServerPort() string {
 	return getEnvironmentVariable("ROPC_SERVER_PORT")
 }

@@ -13,7 +13,6 @@ const authenticationSuccessMsg = "Authentication successful"
 
 type AuthenticationHandler interface {
 	Authenticate(w http.ResponseWriter, r *http.Request)
-	LoginPage(w http.ResponseWriter, r *http.Request)
 }
 
 type authenticationHandler struct {
@@ -45,17 +44,27 @@ func (a *authenticationHandler) Authenticate(w http.ResponseWriter, r *http.Requ
 		panic(errors.New("grant type is required"))
 	}
 
-	token, err := a.authenticator.ClientCredentials(clientId, clientSecret)
+	var token *model.Token
+	var err error
+
+	switch grantType {
+	case "client_credentials":
+		token, err = a.authenticator.ClientCredentials(clientId, clientSecret)
+	default:
+		panic(errors.New("invalid grant type"))
+	}
+
 	if err != nil {
 		_ = PrintResponse(http.StatusUnauthorized, w, &model.Response[string]{Message: err.Error()})
 		return
 	}
 
-	_ = PrintResponse[any](http.StatusOK, w, token)
-}
+	response := &model.Response[*model.Token]{
+		Message: authenticationSuccessMsg,
+		Payload: token,
+	}
 
-func (a *authenticationHandler) LoginPage(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./assets/html/login.html")
+	_ = PrintResponse[*model.Response[*model.Token]](http.StatusOK, w, response)
 }
 
 func (a *authenticationHandler) GetMux() *mux.Router {

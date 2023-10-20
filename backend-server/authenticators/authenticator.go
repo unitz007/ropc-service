@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-const InvalidClientMessage = "invalid client credentials"
+const InvalidClientMessage = "invalid credentials"
 const ConnectionErrorMessage = "could not authenticate client"
 
 type Authenticator interface {
@@ -21,15 +21,9 @@ type clientAuthenticator struct {
 	thirdPartyClientAuthenticator ThirdPartyClientAuthenticator
 }
 
-func NewClientAuthenticator(repository repositories.ApplicationRepository) Authenticator {
-	return &clientAuthenticator{
-		repository: repository,
-	}
-}
-
 func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*model.Token, error) {
 
-	client, err := selfC.repository.Get(clientId)
+	client, err := selfC.repository.GetByClientId(clientId)
 
 	if err != nil {
 		return nil, err
@@ -39,13 +33,13 @@ func (selfC clientAuthenticator) Authenticate(clientId, clientSecret string) (*m
 		return nil, errors.New(InvalidClientMessage)
 	}
 
-	token, err := utils.GenerateToken(client, clientSecret)
+	_, err = utils.GenerateToken(client, clientSecret)
 	if err != nil {
 		return nil, err
 	}
 
 	tokenResponse := &model.Token{
-		AccessToken: token,
+		AccessToken: "",
 	}
 
 	return tokenResponse, nil

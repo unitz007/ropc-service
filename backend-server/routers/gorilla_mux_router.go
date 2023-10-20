@@ -10,6 +10,14 @@ type MuxMultiplexer struct {
 	router *mux.Router
 }
 
+func (mux *MuxMultiplexer) Delete(path string, handler func(http.ResponseWriter, *http.Request)) {
+	mux.router.HandleFunc(path, handler).Methods(http.MethodDelete)
+}
+
+func (mux *MuxMultiplexer) Put(path string, handler func(http.ResponseWriter, *http.Request)) {
+	mux.router.HandleFunc(path, handler).Methods(http.MethodPut)
+}
+
 func (mux *MuxMultiplexer) Name() string {
 	return "Mux Router"
 }

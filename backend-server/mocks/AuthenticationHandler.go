@@ -5,7 +5,6 @@ package mocks
 import (
 	http "net/http"
 
-	mux "github.com/gorilla/mux"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -16,27 +15,6 @@ type AuthenticationHandler struct {
 
 // Authenticate provides a mock function with given fields: w, r
 func (_m *AuthenticationHandler) Authenticate(w http.ResponseWriter, r *http.Request) {
-	_m.Called(w, r)
-}
-
-// GetMux provides a mock function with given fields:
-func (_m *AuthenticationHandler) GetMux() *mux.Router {
-	ret := _m.Called()
-
-	var r0 *mux.Router
-	if rf, ok := ret.Get(0).(func() *mux.Router); ok {
-		r0 = rf()
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*mux.Router)
-		}
-	}
-
-	return r0
-}
-
-// LoginPage provides a mock function with given fields: w, r
-func (_m *AuthenticationHandler) LoginPage(w http.ResponseWriter, r *http.Request) {
 	_m.Called(w, r)
 }
 

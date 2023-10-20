@@ -51,7 +51,7 @@ func (m *DBMock) GetDatabaseConnection() *gorm.DB {
 	return m.db
 }
 
-func PrepareContainer(ctx context.Context) *Container {
+func prepareContainer(ctx context.Context) *Container {
 	dbContainer, err := mysqltestcontainer.RunContainer(ctx,
 		mysqltestcontainer.WithDatabase("ropc_db"),
 		mysqltestcontainer.WithPassword("testpassword"),
@@ -82,7 +82,7 @@ func NewDatabaseMock(t testing.TB) *DatabaseMock {
 	t.Helper()
 	ctx := context.Background()
 
-	c := PrepareContainer(ctx)
+	c := prepareContainer(ctx)
 
 	db, err := gorm.Open(mysql.Open(c.URI), &gorm.Config{})
 	if err != nil {

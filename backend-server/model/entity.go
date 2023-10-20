@@ -14,22 +14,23 @@ type Application struct {
 	RedirectUri  string `gorm:""`
 }
 
-func NewApplication(clientId string) (*Application, error) {
+func NewApplication(clientId, name string) (*Application, error) {
 
 	if clientId == "" {
 		return nil, errors.New("client id should not be empty")
 	}
 
-	//hashed, _ := bcrypt.GenerateFromPassword([]byte(clientSecret), 0)
-
 	app := &Application{
 		ClientId: clientId,
-		//ClientSecret: string(hashed),
+		Name:     name,
 	}
 
 	return app, nil
 }
 
 func (a *Application) ToDTO() *ApplicationDto {
-	return &ApplicationDto{ClientId: a.ClientId}
+	return &ApplicationDto{
+		ClientId: a.ClientId,
+		Name:     a.Name,
+	}
 }

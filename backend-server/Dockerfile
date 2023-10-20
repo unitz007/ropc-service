@@ -5,11 +5,6 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY ./backend-server .
-COPY .env .
-RUN mkdir assets
-COPY ./assets assets
+COPY ./ropc .
 
-RUN export GIN_MODE=release # run GIN in production mode
-
-CMD ["./backend-server"]
+CMD ["./ropc"]

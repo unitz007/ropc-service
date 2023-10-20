@@ -13,6 +13,11 @@ type Router struct {
 	mock.Mock
 }
 
+// Delete provides a mock function with given fields: path, handler
+func (_m *Router) Delete(path string, handler func(http.ResponseWriter, *http.Request)) {
+	_m.Called(path, handler)
+}
+
 // Get provides a mock function with given fields: path, handlerFunc
 func (_m *Router) Get(path string, handlerFunc func(http.ResponseWriter, *http.Request)) {
 	_m.Called(path, handlerFunc)
@@ -34,6 +39,11 @@ func (_m *Router) Name() string {
 
 // Post provides a mock function with given fields: path, handler
 func (_m *Router) Post(path string, handler func(http.ResponseWriter, *http.Request)) {
+	_m.Called(path, handler)
+}
+
+// Put provides a mock function with given fields: path, handler
+func (_m *Router) Put(path string, handler func(http.ResponseWriter, *http.Request)) {
 	_m.Called(path, handler)
 }
 

@@ -27,8 +27,24 @@ func (_m *ApplicationRepository) Create(client *model.Application) error {
 	return r0
 }
 
-// Get provides a mock function with given fields: clientId
-func (_m *ApplicationRepository) Get(clientId string) (*model.Application, error) {
+// GetAll provides a mock function with given fields:
+func (_m *ApplicationRepository) GetAll() []model.Application {
+	ret := _m.Called()
+
+	var r0 []model.Application
+	if rf, ok := ret.Get(0).(func() []model.Application); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]model.Application)
+		}
+	}
+
+	return r0
+}
+
+// GetByClientId provides a mock function with given fields: clientId
+func (_m *ApplicationRepository) GetByClientId(clientId string) (*model.Application, error) {
 	ret := _m.Called(clientId)
 
 	var r0 *model.Application
@@ -53,20 +69,56 @@ func (_m *ApplicationRepository) Get(clientId string) (*model.Application, error
 	return r0, r1
 }
 
-// GetAll provides a mock function with given fields:
-func (_m *ApplicationRepository) GetAll() []model.Application {
-	ret := _m.Called()
+// GetByName provides a mock function with given fields: name
+func (_m *ApplicationRepository) GetByName(name string) (*model.Application, error) {
+	ret := _m.Called(name)
 
-	var r0 []model.Application
-	if rf, ok := ret.Get(0).(func() []model.Application); ok {
-		r0 = rf()
+	var r0 *model.Application
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string) (*model.Application, error)); ok {
+		return rf(name)
+	}
+	if rf, ok := ret.Get(0).(func(string) *model.Application); ok {
+		r0 = rf(name)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]model.Application)
+			r0 = ret.Get(0).(*model.Application)
 		}
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(name)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Update provides a mock function with given fields: app
+func (_m *ApplicationRepository) Update(app *model.Application) (*model.Application, error) {
+	ret := _m.Called(app)
+
+	var r0 *model.Application
+	var r1 error
+	if rf, ok := ret.Get(0).(func(*model.Application) (*model.Application, error)); ok {
+		return rf(app)
+	}
+	if rf, ok := ret.Get(0).(func(*model.Application) *model.Application); ok {
+		r0 = rf(app)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*model.Application)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(*model.Application) error); ok {
+		r1 = rf(app)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewApplicationRepository interface {

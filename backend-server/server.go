@@ -6,24 +6,29 @@ import (
 	"backend-server/routers"
 	"fmt"
 	"net/http"
-	"reflect"
 	"time"
 )
 
 type Server interface {
 	Start(address string) error
 	RegisterHandler(path, method string, handler func(w http.ResponseWriter, r *http.Request))
+	AttachMiddleware(middleware func(w http.ResponseWriter, r *http.Request) func(http.ResponseWriter, *http.Request)) Server
 }
 
 type api struct {
 	path   string
 	method string
-	name   string
 }
 
 type server struct {
-	router   routers.Router
-	handlers []api
+	router      routers.Router
+	handlers    []api
+	middlewares []func(w http.ResponseWriter, r *http.Request) func(http.ResponseWriter, *http.Request)
+}
+
+func (s *server) AttachMiddleware(middleware func(w http.ResponseWriter, r *http.Request) func(http.ResponseWriter, *http.Request)) Server {
+	s.middlewares = append(s.middlewares, middleware)
+	return s
 }
 
 func NewServer(router routers.Router) Server {
@@ -48,13 +53,10 @@ func (s *server) Start(addr string) error {
 
 	}()
 
-	start := time.Now().UnixMilli()
-	elapsed := int64(0)
-
 	go func() {
 		time.Sleep(time.Millisecond * 5)
 		logger.Info(fmt.Sprintf("%d handler(s) registered", len(s.handlers)))
-		msg := fmt.Sprintf("Server started on port %s, with %s, in %d", PORT, s.router.Name(), start-elapsed)
+		msg := fmt.Sprintf("Server started on port %s, with %s.", PORT, s.router.Name())
 		logger.Info(msg)
 	}()
 
@@ -63,8 +65,6 @@ func (s *server) Start(addr string) error {
 	if err != nil {
 		return err
 	}
-
-	elapsed = time.Now().UnixMilli()
 
 	return nil
 
@@ -79,6 +79,8 @@ func (s *server) RegisterHandler(path, method string, handler func(w http.Respon
 		s.router.Get(path, fHandler)
 	case http.MethodPost:
 		s.router.Post(path, fHandler)
+	case http.MethodPut:
+		s.router.Put(path, fHandler)
 	default:
 		m := fmt.Sprintf("%s not registered: %s", path, fmt.Sprintf("%s is an unsupported method type.", method))
 		logger.Warn(m)
@@ -87,7 +89,6 @@ func (s *server) RegisterHandler(path, method string, handler func(w http.Respon
 	h := api{
 		path:   path,
 		method: method,
-		name:   reflect.ValueOf(handler).String(),
 	}
 
 	s.handlers = append(s.handlers, h)

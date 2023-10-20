@@ -10,24 +10,40 @@ import (
 )
 
 type ApplicationRepository interface {
-	Get(clientId string) (*model.Application, error)
+	GetByClientId(clientId string) (*model.Application, error)
 	GetAll() []model.Application
 	Create(client *model.Application) error
+	Update(app *model.Application) (*model.Application, error)
+	GetByName(name string) (*model.Application, error)
 }
 
 type applicationRepository struct {
 	db conf.Database[gorm.DB]
 }
 
+func (a applicationRepository) Update(app *model.Application) (*model.Application, error) {
+	err := a.db.GetDatabaseConnection().
+		Model(app).
+		Where("client_id = ?", app.ClientId).
+		Update("client_secret", app.ClientSecret).
+		Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return app, nil
+}
+
 func NewApplicationRepository(db conf.Database[gorm.DB]) ApplicationRepository {
 	return &applicationRepository{db: db}
 }
 
-func (c applicationRepository) Get(clientId string) (*model.Application, error) {
+func (a applicationRepository) GetByClientId(clientId string) (*model.Application, error) {
 
 	var client model.Application
 
-	err := c.db.GetDatabaseConnection().
+	err := a.db.GetDatabaseConnection().
 		Model(&model.Application{}).
 		Where("client_id = ?", clientId).
 		First(&client).
@@ -40,18 +56,35 @@ func (c applicationRepository) Get(clientId string) (*model.Application, error) 
 	return &client, nil
 }
 
-func (c applicationRepository) GetAll() []model.Application {
+func (a applicationRepository) GetByName(name string) (*model.Application, error) {
+
+	var client model.Application
+
+	err := a.db.GetDatabaseConnection().
+		Model(&model.Application{}).
+		Where("name = ?", name).
+		First(&client).
+		Error
+
+	if err != nil {
+		return nil, errors.New("application not found")
+	}
+
+	return &client, nil
+}
+
+func (a applicationRepository) GetAll() []model.Application {
 
 	var clients []model.Application
 
-	c.db.GetDatabaseConnection().Find(&clients)
+	a.db.GetDatabaseConnection().Find(&clients)
 
 	return clients
 }
 
-func (c applicationRepository) Create(client *model.Application) error {
+func (a applicationRepository) Create(client *model.Application) error {
 
-	err := c.db.GetDatabaseConnection().Create(client).Error
+	err := a.db.GetDatabaseConnection().Create(client).Error
 
 	if err != nil {
 		if strings.Contains(err.Error(), "Duplicate entry") {
