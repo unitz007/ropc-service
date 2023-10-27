@@ -4,41 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="push">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ropc-backend/handlers/user_handler_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ropc-backend/utils/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ropc-backend/utils/logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ropc-backend/utils/new_relic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/authenticators/authenticator.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/authenticators/authenticator.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/conf/config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/conf/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/repositories/database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/conf/env.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/conf/env_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/application_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/application_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/application_handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/application_handler_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/user_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/user_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/logger/logger.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/middlewares/logger_middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/middlewares/logger_middleware.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/middlewares/panic_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/middlewares/panic_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/middlewares/security.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/middlewares/security.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/model/entity.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/model/entity.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/model/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/model/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/repositories/application_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/repositories/application_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/repositories/application_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/repositories/application_repository_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/repositories/user_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/repositories/user_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/ropc" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/ropc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/services/authentication_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/services/authentication_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/services/client_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/services/client_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/utils/utils.go" afterDir="false" />
-    </list>
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="push" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,9 +89,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ropc-backend" />
       <recent name="$PROJECT_DIR$/ropc-backend/repositories" />
       <recent name="$PROJECT_DIR$/ropc-backend/utils" />
-      <recent name="$PROJECT_DIR$/ropc-backend" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go run">
@@ -293,8 +259,17 @@
       <workItem from="1698072377905" duration="7815000" />
       <workItem from="1698099033530" duration="4749000" />
       <workItem from="1698254894153" duration="9732000" />
-      <workItem from="1698273701540" duration="9350000" />
+      <workItem from="1698273701540" duration="9699000" />
     </task>
+    <task id="LOCAL-00001" summary="push">
+      <option name="closed" value="true" />
+      <created>1698443459778</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698443459778</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
