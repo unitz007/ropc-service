@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ropc-db
+  namespace: test
+  labels:
+    app: ropc-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ropc-db
+  template:
+    metadata:
+      labels:
+        app: ropc-db
+    spec:
+      containers:
+        - name: ropc-db-container
+          image: mariadb:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: dbPassword
+            - name: MARIADB_DATABASE
+              value: ropc_db
