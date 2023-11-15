@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="push">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="github actions">
       <change beforePath="$PROJECT_DIR$/ropc-backend" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/argo-cd/file.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/argo-cd/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/authenticators/user_authenticator_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/authenticators/user_authenticator_test.go" afterDir="false" />
+    </list>
+    <list id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +102,7 @@
       <recent name="$PROJECT_DIR$/ropc-backend/utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go run">
+  <component name="RunManager" selected="Go Test.Test_UserAuthenticationFailure in backend-server/authenticators">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -143,6 +147,7 @@
       <working_directory value="$PROJECT_DIR$/ropc-backend" />
       <envs>
         <env name="NEW_RELIC_APP_NAME" value="go-agent" />
+        <env name="NEW_RELIC_LICENSE" value="eu01xx47e73a44a47317868a6c7a89d5FFFFNRAL" />
         <env name="ROPC_DATABASE_PASSWORD" value="unitz007" />
         <env name="ROPC_DB_HOST" value="localhost" />
         <env name="ROPC_DB_NAME" value="ropc_db" />
@@ -152,7 +157,6 @@
         <env name="ROPC_SERVER_PORT" value="8080" />
         <env name="ROPC_TOKEN_EXPIRY" value="30000" />
         <env name="ROPC_TOKEN_SECRET" value="utiriooiwueuititiiyiyi" />
-        <env name="NEW_RELIC_LICENSE" value="eu01xx47e73a44a47317868a6c7a89d5FFFFNRAL" />
       </envs>
       <kind value="PACKAGE" />
       <package value="backend-server" />
@@ -184,18 +188,6 @@
       <pattern value="^\QTestCreateUser\E$/^\Qshould_not_create_a_new_user_if_username_already_exists_in_database\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestCreateUser/should_panic_if_username_is_not_provided in backend-server/handlers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="ropc-service" />
-      <working_directory value="$PROJECT_DIR$/ropc-backend/handlers" />
-      <root_directory value="$PROJECT_DIR$/ropc-backend" />
-      <kind value="PACKAGE" />
-      <package value="backend-server/handlers" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <pattern value="^\QTestCreateUser\E$/^\Qshould_panic_if_username_is_not_provided\E$" />
-      <method v="2" />
-    </configuration>
     <configuration name="TestCreateUser/user_created_successfully in backend-server/handlers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="ropc-service" />
       <working_directory value="$PROJECT_DIR$/ropc-backend/handlers" />
@@ -208,16 +200,16 @@
       <pattern value="^\QTestCreateUser\E$/^\Quser_created_successfully\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestGetApplication/should_panic_with_application_not_found in backend-server/handlers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="Test_UserAuthenticationFailure in backend-server/authenticators" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="ropc-service" />
-      <working_directory value="$PROJECT_DIR$/ropc-backend/handlers" />
+      <working_directory value="$PROJECT_DIR$/ropc-backend/authenticators" />
       <root_directory value="$PROJECT_DIR$/ropc-backend" />
       <kind value="PACKAGE" />
-      <package value="backend-server/handlers" />
+      <package value="backend-server/authenticators" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestGetApplication\E$/^\Qshould_panic_with_application_not_found\E$" />
+      <pattern value="^\QTest_UserAuthenticationFailure\E$" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
@@ -230,21 +222,32 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="go test backend-server/authenticators" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="ropc-service" />
+      <working_directory value="$PROJECT_DIR$/ropc-backend/authenticators" />
+      <root_directory value="$PROJECT_DIR$/ropc-backend" />
+      <kind value="PACKAGE" />
+      <package value="backend-server/authenticators" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Go Build.go run" />
+      <item itemvalue="Go Test.Test_UserAuthenticationFailure in backend-server/authenticators" />
+      <item itemvalue="Go Test.go test backend-server/authenticators" />
       <item itemvalue="Go Test.TestCreateUser in backend-server/handlers" />
       <item itemvalue="Go Test.TestCreateUser/should_not_create_a_new_user_if_username_already_exists_in_database in backend-server/handlers" />
-      <item itemvalue="Go Test.TestCreateUser/should_panic_if_username_is_not_provided in backend-server/handlers" />
       <item itemvalue="Go Test.TestCreateUser/user_created_successfully in backend-server/handlers" />
-      <item itemvalue="Go Test.TestGetApplication/should_panic_with_application_not_found in backend-server/handlers" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.Test_UserAuthenticationFailure in backend-server/authenticators" />
+        <item itemvalue="Go Test.go test backend-server/authenticators" />
         <item itemvalue="Go Test.TestCreateUser/user_created_successfully in backend-server/handlers" />
         <item itemvalue="Go Test.TestCreateUser/should_not_create_a_new_user_if_username_already_exists_in_database in backend-server/handlers" />
         <item itemvalue="Go Test.TestCreateUser in backend-server/handlers" />
-        <item itemvalue="Go Test.TestCreateUser/should_panic_if_username_is_not_provided in backend-server/handlers" />
-        <item itemvalue="Go Test.TestGetApplication/should_panic_with_application_not_found in backend-server/handlers" />
       </list>
     </recent_temporary>
   </component>
@@ -252,6 +255,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="" />
+      <changelist id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="" />
       <created>1697832135052</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -267,7 +271,9 @@
       <workItem from="1699034223133" duration="113000" />
       <workItem from="1699034551210" duration="2127000" />
       <workItem from="1699569339861" duration="43000" />
-      <workItem from="1699569440409" duration="42000" />
+      <workItem from="1699569440409" duration="820000" />
+      <workItem from="1699641525955" duration="7155000" />
+      <workItem from="1700054637448" duration="47000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <option name="closed" value="true" />
@@ -293,7 +299,47 @@
       <option name="project" value="LOCAL" />
       <updated>1698525847610</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="argocd definition">
+      <option name="closed" value="true" />
+      <created>1699569676204</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699569676204</updated>
+    </task>
+    <task id="LOCAL-00005" summary="generate client id">
+      <option name="closed" value="true" />
+      <created>1699659401022</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699659401022</updated>
+    </task>
+    <task id="LOCAL-00006" summary="github actions">
+      <option name="closed" value="true" />
+      <created>1699659633334</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699659633334</updated>
+    </task>
+    <task id="LOCAL-00007" summary="github actions">
+      <option name="closed" value="true" />
+      <created>1699659704535</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699659704535</updated>
+    </task>
+    <task id="LOCAL-00008" summary="github actions">
+      <option name="closed" value="true" />
+      <created>1699659903434</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699659903434</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +358,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="push" />
-    <option name="LAST_COMMIT_MESSAGE" value="push" />
+    <MESSAGE value="argocd definition" />
+    <MESSAGE value="generate client id" />
+    <MESSAGE value="github actions" />
+    <option name="LAST_COMMIT_MESSAGE" value="github actions" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
