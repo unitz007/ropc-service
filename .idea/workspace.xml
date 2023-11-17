@@ -4,21 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="argocd infrastructure">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="add README">
+      <change afterPath="$PROJECT_DIR$/ropc-backend/ropc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ropc-backend" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/application_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/application_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/authentication_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/authentication_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/user_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/user_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/handlers/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/handlers/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/middlewares/security.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/middlewares/security.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/model/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/model/response.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/model/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/model/token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/services/authentication_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/services/authentication_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/utils/utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationRepository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticationHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticationHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticatorService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticatorService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Config.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Database.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Router.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Server.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserRepository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserService.go" afterDir="false" />
     </list>
     <list id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +51,13 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -94,35 +105,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.kubernetes.config.KubernetesConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowRun.ShowToolbar": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/charles/Personal/golang/ropc-service/gitOps",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.kubernetes.config.KubernetesConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gitOps" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/ropc-backend" />
@@ -130,7 +145,7 @@
       <recent name="$PROJECT_DIR$/ropc-backend/utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go run">
+  <component name="RunManager" selected="Docker.ropc-backend/Dockerfile">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -192,18 +207,6 @@
       <filePath value="$PROJECT_DIR$/ropc-backend/main.go" />
       <method v="2" />
     </configuration>
-    <configuration name="TestCreateUser in backend-server/handlers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="ropc-service" />
-      <working_directory value="$PROJECT_DIR$/ropc-backend/handlers" />
-      <root_directory value="$PROJECT_DIR$/ropc-backend" />
-      <kind value="PACKAGE" />
-      <package value="backend-server/handlers" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <pattern value="^\QTestCreateUser\E$" />
-      <method v="2" />
-    </configuration>
     <configuration name="TestCreateUser/should_not_create_a_new_user_if_username_already_exists_in_database in backend-server/handlers" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="ropc-service" />
       <working_directory value="$PROJECT_DIR$/ropc-backend/handlers" />
@@ -261,21 +264,34 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ropc-backend/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="buildOnly" value="true" />
+          <option name="sourceFilePath" value="ropc-backend/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.ropc-backend/Dockerfile" />
       <item itemvalue="Go Build.go run" />
       <item itemvalue="Go Test.Test_UserAuthenticationFailure in backend-server/authenticators" />
       <item itemvalue="Go Test.go test backend-server/authenticators" />
-      <item itemvalue="Go Test.TestCreateUser in backend-server/handlers" />
       <item itemvalue="Go Test.TestCreateUser/should_not_create_a_new_user_if_username_already_exists_in_database in backend-server/handlers" />
       <item itemvalue="Go Test.TestCreateUser/user_created_successfully in backend-server/handlers" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.ropc-backend/Dockerfile" />
         <item itemvalue="Go Test.Test_UserAuthenticationFailure in backend-server/authenticators" />
         <item itemvalue="Go Test.go test backend-server/authenticators" />
         <item itemvalue="Go Test.TestCreateUser/user_created_successfully in backend-server/handlers" />
         <item itemvalue="Go Test.TestCreateUser/should_not_create_a_new_user_if_username_already_exists_in_database in backend-server/handlers" />
-        <item itemvalue="Go Test.TestCreateUser in backend-server/handlers" />
       </list>
     </recent_temporary>
   </component>
@@ -305,7 +321,8 @@
       <workItem from="1700054730022" duration="3614000" />
       <workItem from="1700082854603" duration="2721000" />
       <workItem from="1700086757384" duration="2376000" />
-      <workItem from="1700089161731" duration="2331000" />
+      <workItem from="1700089161731" duration="11620000" />
+      <workItem from="1700174398191" duration="2404000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <option name="closed" value="true" />
@@ -387,7 +404,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700056302877</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="access token refactor">
+      <option name="closed" value="true" />
+      <created>1700091919283</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1700091919284</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add README">
+      <option name="closed" value="true" />
+      <created>1700178956411</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1700178956411</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -411,7 +444,9 @@
     <MESSAGE value="generate client id" />
     <MESSAGE value="github actions" />
     <MESSAGE value="argocd infrastructure" />
-    <option name="LAST_COMMIT_MESSAGE" value="argocd infrastructure" />
+    <MESSAGE value="access token refactor" />
+    <MESSAGE value="add README" />
+    <option name="LAST_COMMIT_MESSAGE" value="add README" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
