@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="argo cd test">
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="argo cd refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/Deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/Deployment.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/Service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/namespace.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/namespace.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/database/Deployment.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/database/Service.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Deployment.yaml" afterDir="false" />
     </list>
     <list id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -311,7 +306,7 @@
       <workItem from="1700082854603" duration="2721000" />
       <workItem from="1700086757384" duration="2376000" />
       <workItem from="1700089161731" duration="11620000" />
-      <workItem from="1700174398191" duration="11412000" />
+      <workItem from="1700174398191" duration="12108000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <option name="closed" value="true" />
@@ -465,7 +460,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700226176502</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="argo cd refactor">
+      <option name="closed" value="true" />
+      <created>1700227048959</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1700227048959</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +496,8 @@
     <MESSAGE value="push" />
     <MESSAGE value="docker push" />
     <MESSAGE value="argo cd test" />
-    <option name="LAST_COMMIT_MESSAGE" value="argo cd test" />
+    <MESSAGE value="argo cd refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="argo cd refactor" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
