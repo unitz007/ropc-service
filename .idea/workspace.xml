@@ -4,25 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="add README">
-      <change afterPath="$PROJECT_DIR$/ropc-backend/ropc" afterDir="false" />
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="push">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/go.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/go.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationRepository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/ApplicationService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticationHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticationHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticatorService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/AuthenticatorService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Config.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Database.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Router.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/Server.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/Server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserRepository.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserRepository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/mocks/UserService.go" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/mocks/UserService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps" afterDir="false" />
     </list>
     <list id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +24,7 @@
   </component>
   <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/ropc-backend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;history&quot;: [
@@ -322,7 +307,7 @@
       <workItem from="1700082854603" duration="2721000" />
       <workItem from="1700086757384" duration="2376000" />
       <workItem from="1700089161731" duration="11620000" />
-      <workItem from="1700174398191" duration="2404000" />
+      <workItem from="1700174398191" duration="2714000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <option name="closed" value="true" />
@@ -420,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700178956411</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="push">
+      <option name="closed" value="true" />
+      <created>1700179534721</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1700179534721</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,14 +432,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="push" />
     <MESSAGE value="argocd definition" />
     <MESSAGE value="generate client id" />
     <MESSAGE value="github actions" />
     <MESSAGE value="argocd infrastructure" />
     <MESSAGE value="access token refactor" />
     <MESSAGE value="add README" />
-    <option name="LAST_COMMIT_MESSAGE" value="add README" />
+    <MESSAGE value="push" />
+    <option name="LAST_COMMIT_MESSAGE" value="push" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

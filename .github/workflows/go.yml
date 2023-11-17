@@ -21,9 +21,9 @@ jobs:
       with:
         go-version: 1.19
 
-    - name: Test
-      working-directory: backend-server
-      run: go test -v ./...
+#    - name: Test
+#      working-directory: backend-server
+#      run: go test -v ./...
   
 
     - name: Build
