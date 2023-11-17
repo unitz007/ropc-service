@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="docker push">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/go.yml" beforeDir="false" />
+    <list default="true" id="58fb2751-063f-4080-a7d2-0208f54c0f86" name="Changes" comment="argo cd test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/.github/workflows/docker-image.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend/.github/workflows/docker-image.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ropc-backend/.github/workflows/go.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/Deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/Deployment.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/Service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/Service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/backend-application/namespace.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gitOps/ropc/argo-cd/namespace.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/database/Deployment.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitOps/argo-cd/database/Service.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ropc-backend" beforeDir="false" afterPath="$PROJECT_DIR$/ropc-backend" afterDir="false" />
     </list>
     <list id="3463b044-f40d-4b76-9766-8939a43d9ced" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +29,7 @@
   </component>
   <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/ropc-backend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/gitOps" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;history&quot;: [
@@ -100,9 +104,9 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "changes",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/charles/Personal/golang/ropc-service/gitOps",
+    "last_opened_file_path": "/Users/charles/Personal/golang/ropc-service/gitOps/argo-cd",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -119,14 +123,15 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gitOps/argo-cd" />
       <recent name="$PROJECT_DIR$/gitOps" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gitOps/ropc/argo-cd" />
+      <recent name="$PROJECT_DIR$/gitOps/ropc" />
       <recent name="$PROJECT_DIR$/ropc-backend/.github/workflows" />
       <recent name="$PROJECT_DIR$/ropc-backend/.github" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/ropc-backend" />
-      <recent name="$PROJECT_DIR$/ropc-backend/repositories" />
     </key>
   </component>
   <component name="RunManager" selected="Docker.ropc-backend/Dockerfile">
@@ -306,7 +311,7 @@
       <workItem from="1700082854603" duration="2721000" />
       <workItem from="1700086757384" duration="2376000" />
       <workItem from="1700089161731" duration="11620000" />
-      <workItem from="1700174398191" duration="9867000" />
+      <workItem from="1700174398191" duration="11412000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <option name="closed" value="true" />
@@ -444,7 +449,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700220666251</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="docker push">
+      <option name="closed" value="true" />
+      <created>1700222770749</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700222770749</updated>
+    </task>
+    <task id="LOCAL-00019" summary="argo cd test">
+      <option name="closed" value="true" />
+      <created>1700226176502</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1700226176502</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,7 +492,8 @@
     <MESSAGE value="add README" />
     <MESSAGE value="push" />
     <MESSAGE value="docker push" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker push" />
+    <MESSAGE value="argo cd test" />
+    <option name="LAST_COMMIT_MESSAGE" value="argo cd test" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
